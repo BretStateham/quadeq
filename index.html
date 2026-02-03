@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quadratic Equation Visualizer</title>
+  
+  <!-- Pico CSS - Minimal classless CSS framework -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  
+  <!-- KaTeX - Fast math typesetting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.js"></script>
+  
+  <!-- Alpine.js - Lightweight reactivity -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+  
+  <!-- Desmos Calculator API -->
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+  
+  <style>
+    :root {
+      /* Match Desmos colors for consistency */
+      --color-parabola: #2d70b3;
+      --color-vertex: #c74440;
+      --color-y-intercept: #388c46;
+      --color-x-intercept: #6042a6;
+      --color-axis: #c74440;
+      
+      /* UI colors */
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 2rem;
+    }
+
+    /* Color-coded coefficient labels */
+    .coef-a { color: var(--color-parabola); font-weight: bold; }
+    .coef-b { color: var(--color-vertex); font-weight: bold; }
+    .coef-c { color: var(--color-y-intercept); font-weight: bold; }
+
+    /* Solution section colors */
+    .vertex-color { color: var(--color-vertex); }
+    .intercept-color { color: var(--color-x-intercept); }
+    .yint-color { color: var(--color-y-intercept); }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      padding: 8px;
+      background: var(--pico-primary);
+      color: white;
+      z-index: 100;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* Screen reader only text */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Focus indicators */
+    *:focus-visible {
+      outline: 3px solid var(--pico-primary);
+      outline-offset: 2px;
+    }
+
+    /* Respect reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
+    }
+
+    /* Desktop: 3-column layout */
+    .grid {
+      display: grid;
+      grid-template-columns: 250px 1fr 300px;
+      gap: var(--spacing-lg);
+      align-items: start;
+    }
+
+    /* Graph container sizing */
+    #graph-container {
+      min-height: 400px;
+    }
+    
+    #calculator {
+      width: 600px;
+      height: 400px;
+    }
+
+    /* Controls panel */
+    #controls {
+      position: sticky;
+      top: var(--spacing-md);
+    }
+
+    .control-group {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .control-group label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .coef-value {
+      font-family: monospace;
+      min-width: 3ch;
+      text-align: right;
+    }
+
+    /* Solutions panel */
+    #solutions details {
+      margin-bottom: var(--spacing-sm);
+    }
+
+    #solutions article {
+      margin-bottom: var(--spacing-md);
+    }
+
+    /* Equation display */
+    #equation-display {
+      text-align: center;
+      font-size: 1.25rem;
+      margin-bottom: var(--spacing-lg);
+    }
+
+    /* Tablet: 2-column layout */
+    @media (max-width: 1024px) {
+      .grid {
+        grid-template-columns: 200px 1fr;
+      }
+      
+      #solutions {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* Mobile: stacked layout */
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      
+      #controls {
+        position: static;
+      }
+      
+      #calculator {
+        min-height: 300px;
+      }
+    }
+
+    /* KaTeX display styling */
+    .katex-display {
+      margin: 0.5rem 0;
+    }
+
+    footer {
+      margin-top: var(--spacing-lg);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <a href="#controls" class="skip-link">Skip to controls</a>
+  
+  <main class="container" x-data="quadraticApp()" x-init="init()">
+    <!-- Header with live equation display -->
+    <header>
+      <h1>Quadratic Equation Visualizer</h1>
+      <p id="equation-display" 
+         aria-live="polite" 
+         aria-atomic="true"
+         role="status">
+        <span class="sr-only" x-text="'Current equation: y equals ' + a + ' x squared plus ' + b + ' x plus ' + c"></span>
+        <span aria-hidden="true" x-html="renderEquation()"></span>
+      </p>
+    </header>
+    
+    <!-- Hidden summary for graph (screen readers) -->
+    <div id="graph-summary" class="sr-only" aria-live="polite">
+      <span x-text="'Parabola opens ' + (a > 0 ? 'upward' : 'downward') + 
+        '. Vertex at ' + formatNum(vertexX) + ' comma ' + formatNum(vertexY) + 
+        '. ' + rootType + '.'"></span>
+    </div>
+    
+    <!-- Main content grid -->
+    <div class="grid">
+      <!-- Controls Panel -->
+      <section id="controls" aria-label="Coefficient Controls">
+        <h2>Coefficients</h2>
+        
+        <!-- Coefficient a -->
+        <div class="control-group">
+          <label for="coef-a">
+            <span class="coef-label coef-a">a = </span>
+            <span x-text="a.toFixed(1)" class="coef-value coef-a"></span>
+          </label>
+          <input type="range" id="coef-a" 
+                 x-model.number="a" 
+                 min="-5" max="5" step="0.1"
+                 aria-describedby="a-desc">
+          <small id="a-desc">Controls parabola width and direction</small>
+        </div>
+        
+        <!-- Coefficient b -->
+        <div class="control-group">
+          <label for="coef-b">
+            <span class="coef-label coef-b">b = </span>
+            <span x-text="b.toFixed(1)" class="coef-value coef-b"></span>
+          </label>
+          <input type="range" id="coef-b" 
+                 x-model.number="b" 
+                 min="-10" max="10" step="0.1"
+                 aria-describedby="b-desc">
+          <small id="b-desc">Controls horizontal shift</small>
+        </div>
+        
+        <!-- Coefficient c -->
+        <div class="control-group">
+          <label for="coef-c">
+            <span class="coef-label coef-c">c = </span>
+            <span x-text="c.toFixed(1)" class="coef-value coef-c"></span>
+          </label>
+          <input type="range" id="coef-c" 
+                 x-model.number="c" 
+                 min="-10" max="10" step="0.1"
+                 aria-describedby="c-desc">
+          <small id="c-desc">Controls vertical shift (y-intercept)</small>
+        </div>
+        
+        <!-- Reset button -->
+        <button @click="a=1; b=0; c=0" type="button">Reset to Default</button>
+        <button @click="resetView()" type="button" class="secondary">Reset View</button>
+      </section>
+      
+      <!-- Graph Panel -->
+      <section id="graph-container" aria-label="Parabola Graph">
+        <div id="calculator"></div>
+        <small style="display: block; text-align: center; margin-top: 0.5rem;">
+          Use zoom buttons (+/-) to adjust view. <a href="#" @click.prevent="resetView()">Reset View</a>
+        </small>
+      </section>
+      
+      <!-- Solutions Panel -->
+      <section id="solutions" aria-label="Step-by-Step Solutions">
+        <h2>Solutions</h2>
+        
+        <!-- Current equation -->
+        <article>
+          <header>Equation</header>
+          <div x-html="renderEquation()"></div>
+        </article>
+        
+        <!-- Discriminant calculation -->
+        <details open>
+          <summary>Discriminant</summary>
+          <div x-html="renderDiscriminant()"></div>
+        </details>
+        
+        <!-- Vertex calculation -->
+        <details>
+          <summary>Vertex</summary>
+          <div x-html="renderVertex()"></div>
+        </details>
+        
+        <!-- X-intercepts calculation -->
+        <details>
+          <summary>X-Intercepts</summary>
+          <div x-html="renderXIntercepts()"></div>
+        </details>
+        
+        <!-- Y-intercept -->
+        <details>
+          <summary>Y-Intercept</summary>
+          <div x-html="renderYIntercept()"></div>
+        </details>
+      </section>
+    </div>
+    
+    <footer>
+      <small>Powered by <a href="https://www.desmos.com">Desmos</a> | 
+      Math rendered with <a href="https://katex.org">KaTeX</a></small>
+      <br>
+      <details>
+        <summary>Debug Info</summary>
+        <div id="debug-info" style="font-family: monospace; font-size: 12px; white-space: pre;"></div>
+      </details>
+    </footer>
+  </main>
+  
+  <script>
+    // Global calculator instance - initialized outside Alpine
+    let globalCalculator = null;
+    
+    // Global debug function
+    function updateDebug(info) {
+      const el = document.getElementById('debug-info');
+      if (el) {
+        el.textContent = JSON.stringify(info, null, 2);
+      }
+    }
+    
+    // Initialize Desmos calculator BEFORE Alpine loads (using window.onload like the working isolated test)
+    window.addEventListener('load', function() {
+      console.log('Window loaded - initializing Desmos');
+      
+      if (typeof Desmos === 'undefined') {
+        console.error('Desmos not available');
+        return;
+      }
+      
+      const elt = document.getElementById('calculator');
+      
+      globalCalculator = Desmos.GraphingCalculator(elt, {
+        expressions: false,
+        settingsMenu: false,
+        zoomButtons: true
+      });
+      
+      globalCalculator.setMathBounds({
+        left: -10,
+        right: 10,
+        bottom: -10,
+        top: 10
+      });
+      
+      // Draw initial parabola (y = x^2 for a=1, b=0, c=0)
+      globalCalculator.setExpression({
+        id: 'parabola',
+        latex: 'y = x^2',
+        color: '#2d70b3'
+      });
+      
+      console.log('Desmos initialized with initial expression');
+      
+      // Notify Alpine if it's already running
+      window.dispatchEvent(new CustomEvent('desmos-ready'));
+    });
+    
+    function quadraticApp() {
+      return {
+        // Coefficient state
+        a: 1,
+        b: 0,
+        c: 0,
+        
+        // Reference to global calculator
+        get calculator() {
+          return globalCalculator;
+        },
+        
+        // Initialization - Alpine lifecycle
+        init() {
+          // If Desmos is already initialized, update the graph
+          if (globalCalculator) {
+            this.updateGraph();
+          }
+          
+          // Listen for Desmos ready event (in case it loads after Alpine)
+          window.addEventListener('desmos-ready', () => {
+            this.updateGraph();
+          });
+          
+          // Watch for coefficient changes
+          this.$watch('a', () => this.updateGraph());
+          this.$watch('b', () => this.updateGraph());
+          this.$watch('c', () => this.updateGraph());
+        },
+        
+        // Computed: Discriminant
+        get discriminant() {
+          return this.b * this.b - 4 * this.a * this.c;
+        },
+        
+        // Computed: Vertex x-coordinate
+        get vertexX() {
+          return this.a !== 0 ? -this.b / (2 * this.a) : 0;
+        },
+        
+        // Computed: Vertex y-coordinate
+        get vertexY() {
+          return this.a * this.vertexX * this.vertexX + this.b * this.vertexX + this.c;
+        },
+        
+        // Computed: Y-intercept
+        get yIntercept() {
+          return this.c;
+        },
+        
+        // Computed: X-intercepts (returns array or null)
+        get xIntercepts() {
+          if (this.a === 0) return null;
+          if (this.discriminant < 0) return null;
+          if (this.discriminant === 0) {
+            return [this.vertexX];
+          }
+          const sqrtDisc = Math.sqrt(this.discriminant);
+          return [
+            (-this.b + sqrtDisc) / (2 * this.a),
+            (-this.b - sqrtDisc) / (2 * this.a)
+          ];
+        },
+        
+        // Root type description
+        get rootType() {
+          if (this.a === 0) return 'linear equation (not a parabola)';
+          if (this.discriminant > 0) return 'two distinct real roots';
+          if (this.discriminant === 0) return 'one repeated real root';
+          return 'no real roots (two complex roots)';
+        },
+        
+        // Format number for display (handle -0, remove trailing zeros)
+        formatNum(n, decimals = 2) {
+          if (Object.is(n, -0)) return '0';
+          const fixed = n.toFixed(decimals);
+          return parseFloat(fixed).toString();
+        },
+        
+        // Format with sign for equations (+/-)
+        formatWithSign(n) {
+          const formatted = this.formatNum(n);
+          return n >= 0 ? `+ ${formatted}` : `- ${Math.abs(n).toFixed(2).replace(/\.?0+$/, '')}`;
+        },
+        
+        // Generate equation LaTeX
+        get equationLatex() {
+          let latex = `y = `;
+          
+          // a term
+          if (this.a === 1) latex += `x^2`;
+          else if (this.a === -1) latex += `-x^2`;
+          else if (this.a === 0) latex += ``;
+          else latex += `${this.formatNum(this.a)}x^2`;
+          
+          // b term
+          if (this.b !== 0) {
+            if (this.a === 0) {
+              if (this.b === 1) latex += `x`;
+              else if (this.b === -1) latex += `-x`;
+              else latex += `${this.formatNum(this.b)}x`;
+            } else {
+              latex += ` ${this.formatWithSign(this.b)}x`;
+            }
+          }
+          
+          // c term
+          if (this.c !== 0) {
+            if (this.a === 0 && this.b === 0) {
+              latex += `${this.formatNum(this.c)}`;
+            } else {
+              latex += ` ${this.formatWithSign(this.c)}`;
+            }
+          }
+          
+          // Handle all zeros
+          if (this.a === 0 && this.b === 0 && this.c === 0) {
+            latex = `y = 0`;
+          }
+          
+          return latex;
+        },
+        
+        // Reset the graph view to show the parabola properly
+        resetView() {
+          if (!this.calculator) return;
+          const viewport = this.calculateViewport();
+          this.calculator.setMathBounds(viewport);
+          console.log('View reset to:', viewport);
+        },
+        
+        // Build Desmos-compatible latex string for the equation
+        buildEquationLatex() {
+          const a = this.a === 0 ? 0.01 : this.a;
+          
+          // Build equation with proper spacing for Desmos
+          // Format: y = ax^2 + bx + c (with spaces around operators)
+          let parts = [];
+          
+          // a term
+          if (a === 1) {
+            parts.push('x^2');
+          } else if (a === -1) {
+            parts.push('-x^2');
+          } else {
+            parts.push(`${a}x^2`);
+          }
+          
+          // b term
+          if (this.b !== 0) {
+            if (this.b === 1) {
+              parts.push('+ x');
+            } else if (this.b === -1) {
+              parts.push('- x');
+            } else if (this.b > 0) {
+              parts.push(`+ ${this.b}x`);
+            } else {
+              parts.push(`- ${Math.abs(this.b)}x`);
+            }
+          }
+          
+          // c term
+          if (this.c !== 0) {
+            if (this.c > 0) {
+              parts.push(`+ ${this.c}`);
+            } else {
+              parts.push(`- ${Math.abs(this.c)}`);
+            }
+          }
+          
+          return 'y = ' + parts.join(' ');
+        },
+        
+        // Calculate appropriate viewport bounds
+        calculateViewport() {
+          const padding = 2;
+          let xMin = -10, xMax = 10, yMin = -10, yMax = 10;
+          
+          // Include vertex
+          xMin = Math.min(xMin, this.vertexX - padding);
+          xMax = Math.max(xMax, this.vertexX + padding);
+          yMin = Math.min(yMin, this.vertexY - padding);
+          yMax = Math.max(yMax, this.vertexY + padding);
+          
+          // Include y-intercept
+          yMin = Math.min(yMin, this.c - padding);
+          yMax = Math.max(yMax, this.c + padding);
+          
+          // Include x-intercepts if they exist
+          if (this.xIntercepts) {
+            this.xIntercepts.forEach(x => {
+              xMin = Math.min(xMin, x - padding);
+              xMax = Math.max(xMax, x + padding);
+            });
+          }
+          
+          // Ensure reasonable bounds (not too zoomed in or out)
+          const xRange = xMax - xMin;
+          const yRange = yMax - yMin;
+          if (xRange < 10) {
+            const mid = (xMin + xMax) / 2;
+            xMin = mid - 5;
+            xMax = mid + 5;
+          }
+          if (yRange < 10) {
+            const mid = (yMin + yMax) / 2;
+            yMin = mid - 5;
+            yMax = mid + 5;
+          }
+          
+          return { left: xMin, right: xMax, bottom: yMin, top: yMax };
+        },
+        
+        // Update graph with current coefficients
+        updateGraph() {
+          if (!this.calculator) {
+            console.error('Calculator not initialized');
+            updateDebug({ error: 'Calculator not initialized' });
+            return;
+          }
+          
+          const latex = this.buildEquationLatex();
+          console.log('Setting expression:', latex);
+          
+          // Main parabola equation with properly formatted latex
+          this.calculator.setExpression({
+            id: 'parabola',
+            latex: latex,
+            color: '#2d70b3'
+          });
+          
+          // Update feature points (if enabled)
+          if (this.showFeatures !== false) {
+            this.updateFeaturePoints();
+          }
+          
+          // Auto-adjust viewport to show key features
+          const viewport = this.calculateViewport();
+          console.log('Setting viewport:', viewport);
+          this.calculator.setMathBounds(viewport);
+          
+          // Update debug info
+          try {
+            const state = this.calculator.getState();
+            updateDebug({
+              latex: latex,
+              viewport: viewport,
+              expressionCount: state.expressions?.list?.length,
+              expressions: state.expressions?.list?.map(e => ({ id: e.id, latex: e.latex }))
+            });
+          } catch (e) {
+            updateDebug({ error: e.message, latex: latex });
+          }
+        },
+        
+        // Update graph annotations
+        updateFeaturePoints() {
+          if (!this.calculator) return;
+          
+          const vx = this.vertexX.toFixed(2);
+          const vy = this.vertexY.toFixed(2);
+          
+          // Vertex point - use simpler coordinate format
+          this.calculator.setExpression({
+            id: 'vertex',
+            latex: `(${vx}, ${vy})`,
+            color: '#c74440',
+            label: 'Vertex',
+            showLabel: true
+          });
+          
+          // Axis of symmetry (vertical line) - use simple style
+          this.calculator.setExpression({
+            id: 'axis',
+            latex: `x = ${vx}`,
+            color: '#c74440'
+          });
+          
+          // Y-intercept point
+          this.calculator.setExpression({
+            id: 'yintercept',
+            latex: `(0, ${this.c})`,
+            color: '#388c46',
+            label: 'Y-Int',
+            showLabel: true
+          });
+          
+          // X-intercepts (if they exist)
+          if (this.xIntercepts) {
+            this.xIntercepts.forEach((x, i) => {
+              this.calculator.setExpression({
+                id: `xintercept${i}`,
+                latex: `(${x.toFixed(2)}, 0)`,
+                color: '#6042a6',
+                label: `X${i + 1}`,
+                showLabel: true
+              });
+            });
+            
+            // Remove extra intercept point if discriminant changed
+            if (this.xIntercepts.length === 1) {
+              this.calculator.removeExpression({ id: 'xintercept1' });
+            }
+          } else {
+            // Remove intercept points if no real roots
+            this.calculator.removeExpression({ id: 'xintercept0' });
+            this.calculator.removeExpression({ id: 'xintercept1' });
+          }
+        },
+        
+        // Render main equation with KaTeX
+        renderEquation() {
+          try {
+            return katex.renderToString(this.equationLatex, { displayMode: true });
+          } catch (e) {
+            return `<span>y = ${this.a}x² + ${this.b}x + ${this.c}</span>`;
+          }
+        },
+        
+        // Render discriminant calculation
+        renderDiscriminant() {
+          try {
+            const steps = [
+              `\\Delta = b^2 - 4ac`,
+              `\\Delta = (${this.formatNum(this.b)})^2 - 4(${this.formatNum(this.a)})(${this.formatNum(this.c)})`,
+              `\\Delta = ${this.formatNum(this.b * this.b)} - ${this.formatNum(4 * this.a * this.c)}`,
+              `\\Delta = ${this.formatNum(this.discriminant)}`
+            ];
+            
+            let html = steps.map(s => katex.renderToString(s, { displayMode: true })).join('');
+            html += `<p><strong>Result:</strong> ${this.rootType}</p>`;
+            return html;
+          } catch (e) {
+            return `<p>Discriminant: ${this.discriminant.toFixed(2)}</p>`;
+          }
+        },
+        
+        // Render vertex calculation
+        renderVertex() {
+          try {
+            const steps = [
+              `x_v = \\frac{-b}{2a} = \\frac{-(${this.formatNum(this.b)})}{2(${this.formatNum(this.a)})} = ${this.formatNum(this.vertexX)}`,
+              `y_v = f(${this.formatNum(this.vertexX)}) = ${this.formatNum(this.vertexY)}`
+            ];
+            
+            let html = steps.map(s => katex.renderToString(s, { displayMode: true })).join('');
+            html += `<p><strong>Vertex:</strong> (${this.formatNum(this.vertexX)}, ${this.formatNum(this.vertexY)})</p>`;
+            return html;
+          } catch (e) {
+            return `<p>Vertex: (${this.vertexX.toFixed(2)}, ${this.vertexY.toFixed(2)})</p>`;
+          }
+        },
+        
+        // Render x-intercepts calculation
+        renderXIntercepts() {
+          try {
+            let html = katex.renderToString(
+              `x = \\frac{-b \\pm \\sqrt{\\Delta}}{2a}`,
+              { displayMode: true }
+            );
+            
+            if (this.discriminant < 0) {
+              html += katex.renderToString(
+                `x = \\frac{-(${this.formatNum(this.b)}) \\pm \\sqrt{${this.formatNum(this.discriminant)}}}{2(${this.formatNum(this.a)})}`,
+                { displayMode: true }
+              );
+              html += `<p><strong>No real solutions</strong> - the parabola does not cross the x-axis.</p>`;
+              return html;
+            }
+            
+            const sqrtDisc = Math.sqrt(this.discriminant);
+            
+            html += katex.renderToString(
+              `x = \\frac{-(${this.formatNum(this.b)}) \\pm \\sqrt{${this.formatNum(this.discriminant)}}}{2(${this.formatNum(this.a)})}`,
+              { displayMode: true }
+            );
+            
+            html += katex.renderToString(
+              `x = \\frac{${this.formatNum(-this.b)} \\pm ${this.formatNum(sqrtDisc)}}{${this.formatNum(2 * this.a)}}`,
+              { displayMode: true }
+            );
+            
+            if (this.discriminant === 0) {
+              html += katex.renderToString(
+                `x = ${this.formatNum(this.vertexX)}`,
+                { displayMode: true }
+              );
+              html += `<p><strong>One repeated root:</strong> x = ${this.formatNum(this.vertexX)}</p>`;
+            } else {
+              const x1 = this.xIntercepts[0];
+              const x2 = this.xIntercepts[1];
+              html += katex.renderToString(
+                `x_1 = ${this.formatNum(x1)}, \\quad x_2 = ${this.formatNum(x2)}`,
+                { displayMode: true }
+              );
+              html += `<p><strong>Two roots:</strong> x₁ = ${this.formatNum(x1)}, x₂ = ${this.formatNum(x2)}</p>`;
+            }
+            
+            return html;
+          } catch (e) {
+            if (this.xIntercepts) {
+              return `<p>X-Intercepts: ${this.xIntercepts.map(x => x.toFixed(2)).join(', ')}</p>`;
+            }
+            return `<p>No real x-intercepts</p>`;
+          }
+        },
+        
+        // Render y-intercept
+        renderYIntercept() {
+          try {
+            let html = katex.renderToString(
+              `y\\text{-intercept} = c = ${this.formatNum(this.c)}`,
+              { displayMode: true }
+            );
+            html += `<p><strong>Y-Intercept:</strong> (0, ${this.formatNum(this.c)})</p>`;
+            return html;
+          } catch (e) {
+            return `<p>Y-Intercept: (0, ${this.c})</p>`;
+          }
+        }
+      };
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "source": "microsoft/hve-core",
+  "version": "2.0.1",
+  "installed": "2026-02-03T10:30:13-05:00",
+  "files": {
+    ".github/agents/ado-prd-to-wit.agent.md": { "version": "2.0.1", "sha256": "03123b7bd99842d1ff435db125ad969d85493a70a32716dab80e80f54fc22bbf", "status": "managed" },
+    ".github/agents/adr-creation.agent.md": { "version": "2.0.1", "sha256": "46c64c5f580387284da94508909d0f4db47b9057966b7464f7a9a192e0c998f2", "status": "managed" },
+    ".github/agents/arch-diagram-builder.agent.md": { "version": "2.0.1", "sha256": "0e416f6b779920c12982b7d14038e987a75c4bbc8857154a42a84bea8ea7fe49", "status": "managed" },
+    ".github/agents/brd-builder.agent.md": { "version": "2.0.1", "sha256": "010baa0b958b8365be584723cf3a23a4878acf0a2cc1de9d057b887822501fc4", "status": "managed" },
+    ".github/agents/doc-ops.agent.md": { "version": "2.0.1", "sha256": "8867d14429f866687c1d0cc81537bb687078ea8813ab8ba7851c71311302ed22", "status": "managed" },
+    ".github/agents/gen-data-spec.agent.md": { "version": "2.0.1", "sha256": "fad70d1207552780db75f3aad6f4a4bf9ce91e1b0e780b2beaa21ffc8ddf5cc7", "status": "managed" },
+    ".github/agents/gen-jupyter-notebook.agent.md": { "version": "2.0.1", "sha256": "a688cc37518c3d35519e45528a97cc9eea191789fb0f8b1468e8fd6b20bf77b8", "status": "managed" },
+    ".github/agents/gen-streamlit-dashboard.agent.md": { "version": "2.0.1", "sha256": "89abf6a152a5d9ce6113d678c9e8dc04aba1d0e649979e9f8ee02463dede0270", "status": "managed" },
+    ".github/agents/github-issue-manager.agent.md": { "version": "2.0.1", "sha256": "7b17d49f99f9204bce2ea23f570a91a7e26cc272987f33b94a59d86003728359", "status": "managed" },
+    ".github/agents/hve-core-installer.agent.md": { "version": "2.0.1", "sha256": "42a33d4265669d2e031862f56a97e0191e7a65c63cd073b76eada566c586f7ff", "status": "managed" },
+    ".github/agents/memory.agent.md": { "version": "2.0.1", "sha256": "dc546aad8442b1cf794fd50a4edb8442c37f56de25884155f9e71c4da2839cb4", "status": "managed" },
+    ".github/agents/pr-review.agent.md": { "version": "2.0.1", "sha256": "ad66b4a8fec5cc5658df30f247ba0868c8d0cdb7096e1b31fbadad76cbc5d1f8", "status": "managed" },
+    ".github/agents/prd-builder.agent.md": { "version": "2.0.1", "sha256": "c37c66553469d77b3790cb29e89d25c5288993a481b72e60d4ec10947cfb57a5", "status": "managed" },
+    ".github/agents/prompt-builder.agent.md": { "version": "2.0.1", "sha256": "c881c5846b07c38b3a252925e940d8e4b8817a06ab32a2751604afcc8e61afc9", "status": "managed" },
+    ".github/agents/rpi-agent.agent.md": { "version": "2.0.1", "sha256": "b8f77e409e9349bca1fd6017ef95fdf5c978ffb48309ca663ebdf0530fdcb139", "status": "managed" },
+    ".github/agents/security-plan-creator.agent.md": { "version": "2.0.1", "sha256": "63e42eed7ab3e823691faeac128134a05d8d9a2c37fe6c8dadf83e51feb45365", "status": "managed" },
+    ".github/agents/task-implementor.agent.md": { "version": "2.0.1", "sha256": "0f85094d408806cf60cc287001ba827a312e27af8d1ebc48c346e5e383cdfc3f", "status": "managed" },
+    ".github/agents/task-planner.agent.md": { "version": "2.0.1", "sha256": "2836247d2ab280df2d0ff918a2c7114b599d2b938bb3dbd83dff815b13b7af53", "status": "managed" },
+    ".github/agents/task-researcher.agent.md": { "version": "2.0.1", "sha256": "65e14243c901abf1a17bac652dfdc40706baf9525d367074dd1bacd1f8103227", "status": "managed" },
+    ".github/agents/task-reviewer.agent.md": { "version": "2.0.1", "sha256": "7b8ff99d62b25635a461382e2ad85ab71bf5ab63b4657f11c88664259b0f1596", "status": "managed" },
+    ".github/agents/test-streamlit-dashboard.agent.md": { "version": "2.0.1", "sha256": "3a6a5ab6089bcf94c56275b39435b1264f0baf03d8cd3382f9e295f15bdad1e7", "status": "managed" }
+  }
+}

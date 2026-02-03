@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Desmos Test</title>
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+  <style>
+    #calculator { width: 600px; height: 400px; }
+  </style>
+</head>
+<body>
+  <h1>Desmos Minimal Test</h1>
+  <div id="calculator"></div>
+  <p id="status">Loading...</p>
+  
+  <script>
+    window.onload = function() {
+      const elt = document.getElementById('calculator');
+      const status = document.getElementById('status');
+      
+      try {
+        const calculator = Desmos.GraphingCalculator(elt, {
+          expressions: false,
+          settingsMenu: false,
+          zoomButtons: true
+        });
+        
+        // Set a simple parabola
+        calculator.setExpression({
+          id: 'graph1',
+          latex: 'y = x^2'
+        });
+        
+        // Also add a more complex one
+        calculator.setExpression({
+          id: 'graph2',
+          latex: 'y = 3x^2 - 4x + 4',
+          color: '#c74440'
+        });
+        
+        calculator.setMathBounds({
+          left: -5,
+          right: 5,
+          bottom: -2,
+          top: 10
+        });
+        
+        status.textContent = 'Calculator initialized. Expressions: ' + 
+          JSON.stringify(calculator.getState().expressions.list.map(e => e.latex));
+          
+      } catch(e) {
+        status.textContent = 'Error: ' + e.message;
+        console.error(e);
+      }
+    };
+  </script>
+</body>
+</html>

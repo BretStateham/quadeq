@@ -1,0 +1,11 @@
+# HVE-Core AI workflow artifacts (local only)
+.copilot-tracking/
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/

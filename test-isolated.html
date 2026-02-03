@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Isolated Desmos Test</title>
+  <script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+</head>
+<body>
+  <h1>Isolated Desmos Test</h1>
+  <button id="draw-btn">Draw Parabola Manually</button>
+  <div id="calculator" style="width: 600px; height: 400px;"></div>
+  <pre id="output"></pre>
+  
+  <script>
+    const output = document.getElementById('output');
+    const log = (msg) => { output.textContent += msg + '\n'; console.log(msg); };
+    
+    let calculator = null;
+    
+    // Initialize on load
+    window.onload = function() {
+      log('Window loaded');
+      log('Desmos available: ' + (typeof Desmos !== 'undefined'));
+      
+      const elt = document.getElementById('calculator');
+      calculator = Desmos.GraphingCalculator(elt, {
+        expressions: false,
+        settingsMenu: false,
+        zoomButtons: true
+      });
+      
+      log('Calculator created');
+      
+      // Set bounds
+      calculator.setMathBounds({ left: -10, right: 10, bottom: -10, top: 10 });
+      log('Bounds set');
+      
+      // Draw initial parabola
+      drawParabola();
+    };
+    
+    function drawParabola() {
+      log('Drawing parabola...');
+      
+      calculator.setExpression({
+        id: 'parabola',
+        latex: 'y = x^2 + 2x + 3',
+        color: '#2d70b3'
+      });
+      
+      const state = calculator.getState();
+      log('Expressions: ' + JSON.stringify(state.expressions.list.map(e => e.latex)));
+    }
+    
+    document.getElementById('draw-btn').onclick = drawParabola;
+  </script>
+</body>
+</html>
