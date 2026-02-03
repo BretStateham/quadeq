@@ -11,6 +11,7 @@ export interface Point {
 
 export interface SolutionSteps {
   vertex: string[];
+  axisOfSymmetry: string[];
   yIntercept: string[];
   discriminant: string[];
   xIntercepts: string[];

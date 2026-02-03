@@ -17,9 +17,9 @@ test.describe('Quadratic Equation Visualizer', () => {
     await page.fill('input[name="b"]', '-4');
     await page.fill('input[name="c"]', '1');
 
-    // Verify key features update - use exact match
-    await expect(page.getByText('Vertex', { exact: true })).toBeVisible();
-    await expect(page.getByText('Y-Intercept', { exact: true })).toBeVisible();
+    // Verify key features update - use role selector for the term in Key Features
+    await expect(page.getByRole('term').filter({ hasText: 'Vertex' })).toBeVisible();
+    await expect(page.getByRole('term').filter({ hasText: 'Y-Intercept' })).toBeVisible();
   });
 
   test('shows error when a = 0', async ({ page }) => {
@@ -45,14 +45,23 @@ test.describe('Quadratic Equation Visualizer', () => {
     await expect(page.getByText('No real x-intercepts', { exact: true })).toBeVisible();
   });
 
-  test('step-by-step solution is expandable', async ({ page }) => {
+  test('step-by-step solution tags are clickable', async ({ page }) => {
     await page.fill('input[name="a"]', '1');
     await page.fill('input[name="b"]', '-5');
     await page.fill('input[name="c"]', '6');
 
-    // Check that steps section exists
-    await expect(page.getByText('Finding the Vertex')).toBeVisible();
-    await expect(page.getByText('Calculating the Discriminant')).toBeVisible();
+    // Check that all step tags exist
+    await expect(page.getByRole('button', { name: 'Vertex' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Axis of Symmetry' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Discriminant' })).toBeVisible();
+
+    // Click a tag to show steps - check for step list appearing
+    await page.getByRole('button', { name: 'Vertex' }).click();
+    await expect(page.getByRole('list')).toBeVisible();
+
+    // Click again to collapse
+    await page.getByRole('button', { name: 'Vertex' }).click();
+    await expect(page.getByText('Select a topic above')).toBeVisible();
   });
 
   test('handles decimal coefficients', async ({ page }) => {
@@ -60,7 +69,7 @@ test.describe('Quadratic Equation Visualizer', () => {
     await page.fill('input[name="b"]', '-1.5');
     await page.fill('input[name="c"]', '1');
 
-    // Use exact match for the label
-    await expect(page.getByText('Vertex', { exact: true })).toBeVisible();
+    // Use role selector for the term in Key Features
+    await expect(page.getByRole('term').filter({ hasText: 'Vertex' })).toBeVisible();
   });
 });

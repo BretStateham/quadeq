@@ -54,6 +54,7 @@ function generateSteps(coef: Coefficients, discriminant: number): SolutionSteps 
 
   return {
     vertex: generateVertexSteps(a, b, c, vertexX, vertexY),
+    axisOfSymmetry: generateAxisOfSymmetrySteps(a, b, vertexX),
     yIntercept: generateYInterceptSteps(c),
     discriminant: generateDiscriminantSteps(a, b, c, discriminant),
     xIntercepts: generateXInterceptSteps(a, b, discriminant),
@@ -77,6 +78,17 @@ function generateVertexSteps(
     `y = ${a}(${roundForDisplay(x)})^2 + ${b}(${roundForDisplay(x)}) + ${c}`,
     `y = ${roundForDisplay(y)}`,
     `\\text{Vertex: } (${roundForDisplay(x)}, ${roundForDisplay(y)})`
+  ];
+}
+
+function generateAxisOfSymmetrySteps(a: number, b: number, x: number): string[] {
+  return [
+    `\\text{The axis of symmetry is a vertical line through the vertex}`,
+    `\\text{Formula: } x = \\frac{-b}{2a}`,
+    `x = \\frac{-(${b})}{2 \\times ${a}}`,
+    `x = \\frac{${-b}}{${2 * a}}`,
+    `x = ${roundForDisplay(x)}`,
+    `\\text{Axis of Symmetry: } x = ${roundForDisplay(x)}`
   ];
 }
 

@@ -4,6 +4,7 @@ export const QUADRATIC_FORMULA = 'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}';
 export const DISCRIMINANT = '\\Delta = b^2 - 4ac';
 export const VERTEX_X = 'x_v = \\frac{-b}{2a}';
 export const VERTEX_Y = 'y_v = f(x_v)';
+export const AXIS_OF_SYMMETRY = 'x = \\frac{-b}{2a}';
 export const STANDARD_FORM = 'f(x) = ax^2 + bx + c';
 
 // Dynamic formula generation functions
