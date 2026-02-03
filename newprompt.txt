@@ -1,0 +1,198 @@
+Create an interactive Quadratic Equation Visualizer web application from scratch. The application allows users to enter coefficients for the standard form quadratic equation (ax² + bx + c) and provides real-time visualization, step-by-step solutions, and key features of the parabola.
+
+## Technology Stack
+
+Build using:
+- SvelteKit with TypeScript
+- Tailwind CSS v4 (using @import 'tailwindcss' and @theme for CSS variables)
+- KaTeX for mathematical formula rendering
+- function-plot library for interactive graphing
+- Vitest for unit testing with coverage
+- Playwright for E2E testing
+
+## Core Features
+
+### 1. Coefficient Input Panel
+- Three labeled number inputs for coefficients a, b, and c
+- Real-time validation: coefficient 'a' cannot be zero (not a quadratic)
+- Display error message when a=0 with proper ARIA attributes
+- Support decimal and negative values
+- Display the equation format y = ax² + bx + c using KaTeX
+
+### 2. Interactive Graph
+- Render parabola using function-plot library
+- Auto-calculate appropriate x/y domain based on key points
+- Plot key points (vertex, y-intercept, x-intercepts) as scatter markers
+- Draw vertical line for axis of symmetry with label
+- Responsive: resize with container using ResizeObserver
+- Accessible: include aria-label describing the graph content
+
+### 3. Key Features Panel
+Display these features with KaTeX-rendered values:
+- Current equation
+- Vertex coordinates (h, k)
+- Axis of symmetry (x = h)
+- Y-intercept (0, c)
+- X-intercepts (roots) or "No real x-intercepts" when discriminant < 0
+- Discriminant value with interpretation (two real roots, one repeated root, no real roots)
+- Direction (opens upward/downward) with indication of minimum/maximum
+
+### 4. Step-by-Step Solution Panel
+Clickable topic tags that expand to show derivation steps:
+- Vertex calculation (using x = -b/2a formula)
+- Axis of Symmetry derivation
+- Y-Intercept explanation
+- Discriminant calculation (Δ = b² - 4ac) with interpretation
+- X-Intercepts using quadratic formula
+- Complete Quadratic Formula application
+
+Each section shows:
+- The general formula
+- Substitution with current coefficients
+- Step-by-step simplification
+- Final result
+
+All mathematical expressions rendered with KaTeX.
+
+## Mathematical Logic
+
+### Quadratic Solver Module
+Create a pure TypeScript module with:
+- `solveQuadratic(coefficients)`: Returns complete solution object
+- `isEffectivelyZero(value)`: Handle floating-point precision (epsilon = 1e-10)
+- `roundForDisplay(value, decimals)`: Format numbers for display
+
+### Solution Object Structure
+```typescript
+interface QuadraticSolution {
+  coefficients: { a: number; b: number; c: number };
+  vertex: { x: number; y: number };
+  axisOfSymmetry: number;
+  yIntercept: { x: number; y: number };
+  xIntercepts: { x: number; y: number }[] | null;
+  discriminant: number;
+  opensUpward: boolean;
+  steps: SolutionSteps;
+}
+```
+
+### Step Generation
+Generate LaTeX strings for each derivation showing:
+1. General formula
+2. Substitution with actual values
+3. Arithmetic simplification
+4. Final result with interpretation
+
+## State Management
+
+Use Svelte stores:
+- `coefficients`: writable store for { a, b, c }
+- `solution`: derived store that computes solution from coefficients
+- `error`: derived store for validation messages
+- `isValid`: derived store for form validity
+
+## Accessibility Requirements
+
+- All form inputs have associated labels
+- Keyboard navigation works in logical order
+- Error messages linked via aria-describedby
+- Graph container has descriptive aria-label
+- Heading hierarchy: single h1, sections use h2
+- Focus indicators visible
+- Skip link functionality
+
+## Testing Requirements
+
+### Unit Tests (Vitest)
+Test the quadratic solver module:
+- Two distinct real roots (discriminant > 0)
+- One repeated root (discriminant = 0)
+- No real roots (discriminant < 0)
+- Throws error when a = 0
+- Negative coefficients
+- Decimal coefficients
+- Vertex calculation accuracy
+- Y-intercept calculation
+- Parabola direction detection
+- Step generation (non-empty arrays)
+- isEffectivelyZero edge cases
+- roundForDisplay formatting
+
+### E2E Tests (Playwright)
+Test user interactions:
+- Page loads with title and initial graph
+- Coefficient changes update the graph
+- Error displays when a = 0
+- Negative coefficients show "opens downward"
+- No real roots message when discriminant < 0
+- Step tags are clickable and toggle content
+- Decimal coefficients work correctly
+
+### Accessibility E2E Tests
+- Form inputs have visible labels
+- Keyboard Tab navigation order
+- Error messages associated with inputs (aria-describedby)
+- Graph has accessible aria-label
+- Heading hierarchy is valid
+
+## Component Structure
+
+```
+src/
+├── lib/
+│   ├── math/
+│   │   ├── types.ts          # TypeScript interfaces
+│   │   ├── quadratic.ts      # Solver logic
+│   │   ├── quadratic.test.ts # Unit tests
+│   │   └── formulas.ts       # Static LaTeX formulas
+│   ├── stores/
+│   │   └── quadratic.ts      # Svelte stores
+│   └── components/
+│       ├── Math.svelte           # KaTeX wrapper
+│       ├── CoefficientInput.svelte
+│       ├── Graph.svelte
+│       ├── KeyFeatures.svelte
+│       └── SolutionSteps.svelte
+├── routes/
+│   ├── +layout.svelte
+│   └── +page.svelte
+└── app.css                   # Tailwind + theme
+tests/
+└── e2e/
+    ├── quadratic.spec.ts
+    └── accessibility.spec.ts
+```
+
+## Styling
+
+- Use Tailwind CSS v4 with @theme for design tokens
+- Define CSS variables: --color-primary, --color-error, etc.
+- Card-style panels with shadow-sm, rounded borders
+- Responsive layout: stack on mobile, sidebar + main on desktop
+- Minimum touch target size 44px for inputs
+- Number input spinners visible
+
+## NPM Scripts
+
+```json
+{
+  "dev": "vite dev",
+  "build": "vite build",
+  "preview": "vite preview",
+  "test": "vitest",
+  "test:unit": "vitest run",
+  "test:coverage": "vitest run --coverage",
+  "test:e2e": "playwright test",
+  "test:e2e:ui": "playwright test --ui"
+}
+```
+
+## Success Criteria
+
+1. Application renders quadratic equation graph in real-time
+2. All key features calculate correctly for various coefficient combinations
+3. Step-by-step solutions show correct mathematical derivations
+4. Unit tests pass with good coverage of edge cases
+5. E2E tests verify user interactions work correctly
+6. Accessibility tests confirm WCAG compliance
+7. Application is responsive across device sizes
