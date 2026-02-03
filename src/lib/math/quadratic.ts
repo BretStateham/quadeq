@@ -157,14 +157,28 @@ function generateQuadraticFormulaSteps(
   c: number,
   d: number
 ): string[] {
-  return [
+  const steps = [
     `\\text{The quadratic formula: } x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}`,
     `\\text{Substituting } a=${a}, b=${b}, c=${c}\\text{:}`,
     `x = \\frac{-(${b}) \\pm \\sqrt{(${b})^2 - 4(${a})(${c})}}{2(${a})}`,
     `x = \\frac{${-b} \\pm \\sqrt{${b * b} - ${4 * a * c}}}{${2 * a}}`,
-    `x = \\frac{${-b} \\pm \\sqrt{${roundForDisplay(d)}}}{${2 * a}}`,
-    d >= 0
-      ? `x = \\frac{${-b} \\pm ${roundForDisplay(Math.sqrt(d))}}{${2 * a}}`
-      : `\\text{No real solutions (negative discriminant)}`
+    `x = \\frac{${-b} \\pm \\sqrt{${roundForDisplay(d)}}}{${2 * a}}`
   ];
+
+  if (d < 0) {
+    steps.push(`\\text{No real solutions (negative discriminant)}`);
+  } else if (isEffectivelyZero(d)) {
+    const x = -b / (2 * a);
+    steps.push(`x = \\frac{${-b}}{${2 * a}}`);
+    steps.push(`x = ${roundForDisplay(x)}`);
+  } else {
+    const sqrtD = Math.sqrt(d);
+    const x1 = (-b + sqrtD) / (2 * a);
+    const x2 = (-b - sqrtD) / (2 * a);
+    steps.push(`x = \\frac{${-b} \\pm ${roundForDisplay(sqrtD)}}{${2 * a}}`);
+    steps.push(`x_1 = \\frac{${-b} + ${roundForDisplay(sqrtD)}}{${2 * a}} = ${roundForDisplay(x1)}`);
+    steps.push(`x_2 = \\frac{${-b} - ${roundForDisplay(sqrtD)}}{${2 * a}} = ${roundForDisplay(x2)}`);
+  }
+
+  return steps;
 }
