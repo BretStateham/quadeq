@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Coefficients } from '$lib/math/types';
+  import Math from './Math.svelte';
 
   export let coefficients: Coefficients = { a: 1, b: 0, c: 0 };
   export let error: string = '';
@@ -7,101 +8,62 @@
   $: error = coefficients.a === 0 ? 'Coefficient a cannot be zero for a quadratic equation' : '';
 </script>
 
-<div class="coefficient-input">
-  <h2>Enter Coefficients</h2>
-  <p class="equation-form">y = ax² + bx + c</p>
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6">
+  <h2 class="text-lg font-semibold text-gray-900 mb-2">Enter Coefficients</h2>
+  <p class="text-gray-600 mb-4">
+    <Math latex="y = ax^2 + bx + c" />
+  </p>
 
-  <div class="input-group">
-    <label for="coef-a">
-      a =
-      <input
-        type="number"
-        id="coef-a"
-        name="a"
-        bind:value={coefficients.a}
-        step="any"
-        aria-invalid={error ? 'true' : undefined}
-        aria-describedby={error ? 'error-a' : undefined}
-      />
-    </label>
-    {#if error}
-      <span id="error-a" class="error" role="alert">{error}</span>
-    {/if}
-  </div>
+  <div class="space-y-4">
+    <div class="flex flex-col gap-1">
+      <label for="coef-a" class="flex items-center gap-2 font-medium text-gray-700">
+        <Math latex="a" /> =
+        <input
+          type="number"
+          id="coef-a"
+          name="a"
+          bind:value={coefficients.a}
+          step="any"
+          class="flex-1 max-w-[120px] px-3 py-2 min-h-[44px] border rounded-md text-base
+                 focus:outline-none focus:ring-2 focus:ring-primary/20
+                 {error ? 'border-error bg-error-light/10 focus:border-error' : 'border-gray-300 focus:border-primary'}"
+          aria-invalid={error ? 'true' : undefined}
+          aria-describedby={error ? 'error-a' : undefined}
+        />
+      </label>
+      {#if error}
+        <span id="error-a" class="text-sm text-error" role="alert">{error}</span>
+      {/if}
+    </div>
 
-  <div class="input-group">
-    <label for="coef-b">
-      b =
-      <input
-        type="number"
-        id="coef-b"
-        name="b"
-        bind:value={coefficients.b}
-        step="any"
-      />
-    </label>
-  </div>
+    <div class="flex flex-col gap-1">
+      <label for="coef-b" class="flex items-center gap-2 font-medium text-gray-700">
+        <Math latex="b" /> =
+        <input
+          type="number"
+          id="coef-b"
+          name="b"
+          bind:value={coefficients.b}
+          step="any"
+          class="flex-1 max-w-[120px] px-3 py-2 min-h-[44px] border border-gray-300 rounded-md text-base
+                 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+        />
+      </label>
+    </div>
 
-  <div class="input-group">
-    <label for="coef-c">
-      c =
-      <input
-        type="number"
-        id="coef-c"
-        name="c"
-        bind:value={coefficients.c}
-        step="any"
-      />
-    </label>
+    <div class="flex flex-col gap-1">
+      <label for="coef-c" class="flex items-center gap-2 font-medium text-gray-700">
+        <Math latex="c" /> =
+        <input
+          type="number"
+          id="coef-c"
+          name="c"
+          bind:value={coefficients.c}
+          step="any"
+          class="flex-1 max-w-[120px] px-3 py-2 min-h-[44px] border border-gray-300 rounded-md text-base
+                 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+        />
+      </label>
+    </div>
   </div>
 </div>
-
-<style>
-  .coefficient-input {
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 8px;
-  }
-
-  .equation-form {
-    font-family: 'Times New Roman', serif;
-    font-size: 1.2rem;
-    font-style: italic;
-    margin-bottom: 1rem;
-  }
-
-  .input-group {
-    margin-bottom: 0.75rem;
-  }
-
-  label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 500;
-  }
-
-  input {
-    width: 100px;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-  }
-
-  input:focus {
-    outline: 2px solid #2563eb;
-    outline-offset: 2px;
-  }
-
-  input[aria-invalid='true'] {
-    border-color: #dc2626;
-  }
-
-  .error {
-    color: #dc2626;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-    display: block;
-  }
-</style>

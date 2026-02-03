@@ -9,7 +9,7 @@ test.describe('Quadratic Equation Visualizer', () => {
     await expect(
       page.getByRole('heading', { name: 'Quadratic Equation Visualizer' })
     ).toBeVisible();
-    await expect(page.locator('.graph-container, .graph-placeholder')).toBeVisible();
+    await expect(page.getByRole('img', { name: /graph|parabola/i })).toBeVisible();
   });
 
   test('updates graph when coefficients change', async ({ page }) => {

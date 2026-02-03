@@ -9,6 +9,11 @@
   let graphContainer: HTMLDivElement;
   let resizeObserver: ResizeObserver;
 
+  // Generate dynamic aria-label based on equation
+  $: ariaLabel = solution
+    ? `Graph of quadratic function f(x) = ${solution.coefficients.a}x² + ${solution.coefficients.b}x + ${solution.coefficients.c}, parabola ${solution.opensUpward ? 'opens upward' : 'opens downward'}`
+    : 'Quadratic equation graph placeholder';
+
   function renderGraph() {
     if (!graphContainer || !solution) return;
 
@@ -97,47 +102,18 @@
   });
 </script>
 
-<div class="graph-wrapper">
-  <h2>Graph</h2>
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 md:p-6">
+  <h2 class="text-lg font-semibold text-gray-900 mb-4">Graph</h2>
   {#if solution}
     <div
       bind:this={graphContainer}
-      class="graph-container"
+      class="w-full min-h-[400px] border border-gray-200 rounded-lg overflow-hidden"
       role="img"
-      aria-label="Parabola graph showing the quadratic equation"
+      aria-label={ariaLabel}
     ></div>
   {:else}
-    <div class="graph-placeholder">
+    <div class="w-full h-[400px] flex items-center justify-center bg-gray-50 rounded-lg text-gray-500">
       <p>Enter valid coefficients to see the graph</p>
     </div>
   {/if}
 </div>
-
-<style>
-  .graph-wrapper {
-    width: 100%;
-  }
-
-  .graph-container {
-    width: 100%;
-    min-height: 400px;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .graph-placeholder {
-    width: 100%;
-    height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f3f4f6;
-    border-radius: 8px;
-    color: #6b7280;
-  }
-
-  h2 {
-    margin-bottom: 1rem;
-  }
-</style>

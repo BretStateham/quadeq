@@ -12,6 +12,8 @@ test.describe('Accessibility', () => {
   });
 
   test('keyboard navigation works', async ({ page }) => {
+    // First tab goes to skip link, then to inputs
+    await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await expect(page.locator('input[name="a"]')).toBeFocused();
 
@@ -37,8 +39,8 @@ test.describe('Accessibility', () => {
     await page.fill('input[name="b"]', '0');
     await page.fill('input[name="c"]', '0');
 
-    const graphContainer = page.locator('.graph-container');
-    await expect(graphContainer).toHaveAttribute('role', 'img');
+    const graphContainer = page.getByRole('img', { name: /parabola/i });
+    await expect(graphContainer).toBeVisible();
     await expect(graphContainer).toHaveAttribute('aria-label', /parabola/i);
   });
 
