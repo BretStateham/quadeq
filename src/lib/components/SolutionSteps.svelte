@@ -31,7 +31,7 @@
         </summary>
         <ol class="p-4 m-0 list-decimal list-inside space-y-2">
           {#each steps[section.key] as step}
-            <li class="text-gray-700 font-mono text-sm">{step}</li>
+            <li class="text-gray-700 text-sm"><Math latex={step} /></li>
           {/each}
         </ol>
       </details>

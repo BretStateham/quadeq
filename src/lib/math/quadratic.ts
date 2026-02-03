@@ -69,23 +69,23 @@ function generateVertexSteps(
   y: number
 ): string[] {
   return [
-    'Find the x-coordinate: x = -b/(2a)',
-    `x = -(${b})/(2 × ${a})`,
-    `x = ${-b}/${2 * a}`,
+    `\\text{Find the x-coordinate: } x = \\frac{-b}{2a}`,
+    `x = \\frac{-(${b})}{2 \\times ${a}}`,
+    `x = \\frac{${-b}}{${2 * a}}`,
     `x = ${roundForDisplay(x)}`,
-    'Substitute x into y = ax² + bx + c to find y-coordinate',
-    `y = ${a}(${roundForDisplay(x)})² + ${b}(${roundForDisplay(x)}) + ${c}`,
+    `\\text{Substitute } x \\text{ into } y = ax^2 + bx + c \\text{ to find y-coordinate}`,
+    `y = ${a}(${roundForDisplay(x)})^2 + ${b}(${roundForDisplay(x)}) + ${c}`,
     `y = ${roundForDisplay(y)}`,
-    `Vertex: (${roundForDisplay(x)}, ${roundForDisplay(y)})`
+    `\\text{Vertex: } (${roundForDisplay(x)}, ${roundForDisplay(y)})`
   ];
 }
 
 function generateYInterceptSteps(c: number): string[] {
   return [
-    'The y-intercept occurs where x = 0',
-    'y = a(0)² + b(0) + c = c',
+    `\\text{The y-intercept occurs where } x = 0`,
+    `y = a(0)^2 + b(0) + c = c`,
     `y = ${c}`,
-    `Y-intercept: (0, ${c})`
+    `\\text{Y-intercept: } (0, ${c})`
   ];
 }
 
@@ -97,14 +97,14 @@ function generateDiscriminantSteps(
 ): string[] {
   const interpretation =
     d > 0
-      ? 'Since D > 0, there are two distinct real roots'
+      ? `\\text{Since } D > 0 \\text{, there are two distinct real roots}`
       : isEffectivelyZero(d)
-        ? 'Since D = 0, there is exactly one real root'
-        : 'Since D < 0, there are no real roots';
+        ? `\\text{Since } D = 0 \\text{, there is exactly one real root}`
+        : `\\text{Since } D < 0 \\text{, there are no real roots}`;
 
   return [
-    'Calculate the discriminant: D = b² - 4ac',
-    `D = (${b})² - 4(${a})(${c})`,
+    `\\text{Calculate the discriminant: } D = b^2 - 4ac`,
+    `D = (${b})^2 - 4(${a})(${c})`,
     `D = ${b * b} - ${4 * a * c}`,
     `D = ${roundForDisplay(d)}`,
     interpretation
@@ -113,15 +113,15 @@ function generateDiscriminantSteps(
 
 function generateXInterceptSteps(a: number, b: number, d: number): string[] {
   if (d < 0) {
-    return ['No real x-intercepts exist (discriminant is negative)'];
+    return [`\\text{No real x-intercepts exist (discriminant is negative)}`];
   }
 
   if (isEffectivelyZero(d)) {
     const x = -b / (2 * a);
     return [
-      'Since D = 0, there is one repeated root',
-      `x = -b/(2a) = ${roundForDisplay(x)}`,
-      `X-intercept: (${roundForDisplay(x)}, 0)`
+      `\\text{Since } D = 0 \\text{, there is one repeated root}`,
+      `x = \\frac{-b}{2a} = ${roundForDisplay(x)}`,
+      `\\text{X-intercept: } (${roundForDisplay(x)}, 0)`
     ];
   }
 
@@ -130,12 +130,12 @@ function generateXInterceptSteps(a: number, b: number, d: number): string[] {
   const x2 = (-b - sqrtD) / (2 * a);
 
   return [
-    'Apply the quadratic formula: x = (-b ± √D) / (2a)',
-    `x₁ = (${-b} + √${roundForDisplay(d)}) / ${2 * a}`,
-    `x₁ = ${roundForDisplay(x1)}`,
-    `x₂ = (${-b} - √${roundForDisplay(d)}) / ${2 * a}`,
-    `x₂ = ${roundForDisplay(x2)}`,
-    `X-intercepts: (${roundForDisplay(x1)}, 0) and (${roundForDisplay(x2)}, 0)`
+    `\\text{Apply the quadratic formula: } x = \\frac{-b \\pm \\sqrt{D}}{2a}`,
+    `x_1 = \\frac{${-b} + \\sqrt{${roundForDisplay(d)}}}{${2 * a}}`,
+    `x_1 = ${roundForDisplay(x1)}`,
+    `x_2 = \\frac{${-b} - \\sqrt{${roundForDisplay(d)}}}{${2 * a}}`,
+    `x_2 = ${roundForDisplay(x2)}`,
+    `\\text{X-intercepts: } (${roundForDisplay(x1)}, 0) \\text{ and } (${roundForDisplay(x2)}, 0)`
   ];
 }
 
@@ -146,13 +146,13 @@ function generateQuadraticFormulaSteps(
   d: number
 ): string[] {
   return [
-    'The quadratic formula: x = (-b ± √(b² - 4ac)) / (2a)',
-    `Substituting a=${a}, b=${b}, c=${c}:`,
-    `x = (-(${b}) ± √((${b})² - 4(${a})(${c}))) / (2(${a}))`,
-    `x = (${-b} ± √(${b * b} - ${4 * a * c})) / ${2 * a}`,
-    `x = (${-b} ± √${roundForDisplay(d)}) / ${2 * a}`,
+    `\\text{The quadratic formula: } x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}`,
+    `\\text{Substituting } a=${a}, b=${b}, c=${c}\\text{:}`,
+    `x = \\frac{-(${b}) \\pm \\sqrt{(${b})^2 - 4(${a})(${c})}}{2(${a})}`,
+    `x = \\frac{${-b} \\pm \\sqrt{${b * b} - ${4 * a * c}}}{${2 * a}}`,
+    `x = \\frac{${-b} \\pm \\sqrt{${roundForDisplay(d)}}}{${2 * a}}`,
     d >= 0
-      ? `x = (${-b} ± ${roundForDisplay(Math.sqrt(d))}) / ${2 * a}`
-      : 'No real solutions (negative discriminant)'
+      ? `x = \\frac{${-b} \\pm ${roundForDisplay(Math.sqrt(d))}}{${2 * a}}`
+      : `\\text{No real solutions (negative discriminant)}`
   ];
 }
