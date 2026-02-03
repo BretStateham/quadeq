@@ -1,42 +1,38 @@
-# sv
+# Quadratic Equation Visualizer
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+An interactive web application for solving and visualizing quadratic equations. Enter coefficients for ax² + bx + c and see real-time graphing, step-by-step solutions using the quadratic formula, and key features of the parabola.
 
-## Creating a project
+![Quadratic Equation Visualizer](images/QuadraticEquazionVisualizer.jpg)
 
-If you're seeing this, you've probably already done this step. Congrats!
+Built with SvelteKit, TypeScript, Tailwind CSS, KaTeX for math rendering, and function-plot for graphing.
 
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
+## Setup
 
 ```sh
-# recreate this project
-npx sv create --template minimal --types ts --no-install /tmp/quadeq-temp
+npm install
+npx playwright install  # Required for E2E tests
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Testing
 
 ```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm test              # Run unit tests in watch mode
+npm run test:unit     # Run unit tests once
+npm run test:coverage # Run unit tests with coverage report
+npm run test:e2e      # Run Playwright E2E tests
+npm run test:e2e:ui   # Run Playwright tests with UI
 ```
 
-## Building
-
-To create a production version of your app:
+## Development
 
 ```sh
-npm run build
+npm run dev           # Start dev server
+npm run dev -- --open # Start and open in browser
 ```
 
-You can preview the production build with `npm run preview`.
+## Production Build
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```sh
+npm run build   # Create production build
+npm run preview # Preview production build locally
+```
