@@ -26,5 +26,10 @@
 			".github/instructions": true,
 			"../hve-core/.github/instructions": true
 		}
+	},
+	"extensions": {
+		"recommendations": [
+			"svelte.svelte-vscode"
+		]
 	}
 }
