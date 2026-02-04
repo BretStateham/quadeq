@@ -50,5 +50,9 @@ export function formatQuadraticFormula(a: number, b: number, c: number): string 
 	const negB = -b;
 	const denominator = 2 * a;
 
-	return `x = \\frac{${negB} \\pm \\sqrt{${b}^2 - 4(${a})(${c})}}{2(${a})} = \\frac{${negB} \\pm \\sqrt{${discriminant.toFixed(2)}}}{${denominator}}`;
+	// Split formula onto two lines to prevent horizontal overflow on mobile
+	return `\\begin{aligned}
+x &= \\frac{${negB} \\pm \\sqrt{${b}^2 - 4(${a})(${c})}}{2(${a})} \\\\[0.5em]
+&= \\frac{${negB} \\pm \\sqrt{${discriminant.toFixed(2)}}}{${denominator}}
+\\end{aligned}`;
 }

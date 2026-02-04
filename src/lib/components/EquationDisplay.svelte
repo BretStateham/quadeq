@@ -40,6 +40,27 @@
 		padding: 1rem;
 		background: #f8f9fa;
 		border-radius: 8px;
+		max-width: 100%;
+		overflow-x: auto;
+	}
+
+	.equation-display > [role='math'] {
+		max-width: 100%;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	/* Scale down KaTeX on narrow screens */
+	@media (max-width: 480px) {
+		.equation-display :global(.katex) {
+			font-size: 0.85em;
+		}
+	}
+
+	@media (max-width: 360px) {
+		.equation-display :global(.katex) {
+			font-size: 0.75em;
+		}
 	}
 
 	.results {

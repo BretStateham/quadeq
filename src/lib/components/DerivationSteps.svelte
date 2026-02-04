@@ -51,6 +51,8 @@
 		padding: 1rem;
 		background: #f8f9fa;
 		border-radius: 8px;
+		max-width: 100%;
+		overflow-x: auto;
 	}
 
 	summary {
@@ -67,10 +69,29 @@
 		margin-bottom: 1rem;
 	}
 
+	.derivation-steps [role='math'] {
+		max-width: 100%;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
 	.step-label {
 		display: block;
 		font-size: 0.9rem;
 		color: #666;
 		margin-bottom: 0.25rem;
+	}
+
+	/* Scale down KaTeX on narrow screens */
+	@media (max-width: 480px) {
+		details :global(.katex) {
+			font-size: 0.85em;
+		}
+	}
+
+	@media (max-width: 360px) {
+		details :global(.katex) {
+			font-size: 0.75em;
+		}
 	}
 </style>
