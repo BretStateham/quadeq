@@ -1,0 +1,247 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.32.4.45862",
+      "templateHash": "16428756313839225874"
+    },
+    "name": "QuadEq Static Web App",
+    "description": "Deploys an Azure Static Web App for the QuadEq SvelteKit application."
+  },
+  "parameters": {
+    "resourceGroupName": {
+      "type": "string",
+      "defaultValue": "rg-quadeq",
+      "metadata": {
+        "description": "Name of the resource group."
+      }
+    },
+    "staticWebAppName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Static Web App resource."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "eastus2",
+      "allowedValues": [
+        "centralus",
+        "eastus2",
+        "eastasia",
+        "westeurope",
+        "westus2"
+      ],
+      "metadata": {
+        "description": "Azure region for the Static Web App. Free tier only supports specific regions."
+      }
+    },
+    "sku": {
+      "type": "string",
+      "defaultValue": "Free",
+      "allowedValues": [
+        "Free",
+        "Standard"
+      ],
+      "metadata": {
+        "description": "SKU for the Static Web App."
+      }
+    },
+    "repositoryUrl": {
+      "type": "string",
+      "metadata": {
+        "description": "GitHub repository URL."
+      }
+    },
+    "branch": {
+      "type": "string",
+      "metadata": {
+        "description": "Branch to deploy from."
+      }
+    },
+    "tags": {
+      "type": "object",
+      "defaultValue": {},
+      "metadata": {
+        "description": "Resource tags."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2024-03-01",
+      "name": "[parameters('resourceGroupName')]",
+      "location": "[parameters('location')]",
+      "tags": "[parameters('tags')]"
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "staticWebApp",
+      "resourceGroup": "[parameters('resourceGroupName')]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "staticWebAppName": {
+            "value": "[parameters('staticWebAppName')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "sku": {
+            "value": "[parameters('sku')]"
+          },
+          "repositoryUrl": {
+            "value": "[parameters('repositoryUrl')]"
+          },
+          "branch": {
+            "value": "[parameters('branch')]"
+          },
+          "tags": {
+            "value": "[parameters('tags')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.32.4.45862",
+              "templateHash": "4681953456078267323"
+            },
+            "name": "Static Web App Module",
+            "description": "Deploys an Azure Static Web App resource."
+          },
+          "parameters": {
+            "staticWebAppName": {
+              "type": "string",
+              "metadata": {
+                "description": "Name of the Static Web App resource."
+              }
+            },
+            "location": {
+              "type": "string",
+              "metadata": {
+                "description": "Azure region for the Static Web App."
+              }
+            },
+            "sku": {
+              "type": "string",
+              "metadata": {
+                "description": "SKU for the Static Web App."
+              }
+            },
+            "repositoryUrl": {
+              "type": "string",
+              "metadata": {
+                "description": "GitHub repository URL."
+              }
+            },
+            "branch": {
+              "type": "string",
+              "metadata": {
+                "description": "Branch to deploy from."
+              }
+            },
+            "tags": {
+              "type": "object",
+              "defaultValue": {},
+              "metadata": {
+                "description": "Resource tags."
+              }
+            }
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/staticSites",
+              "apiVersion": "2023-12-01",
+              "name": "[parameters('staticWebAppName')]",
+              "location": "[parameters('location')]",
+              "tags": "[parameters('tags')]",
+              "sku": {
+                "name": "[parameters('sku')]",
+                "tier": "[parameters('sku')]"
+              },
+              "properties": {
+                "repositoryUrl": "[parameters('repositoryUrl')]",
+                "branch": "[parameters('branch')]",
+                "stagingEnvironmentPolicy": "Enabled",
+                "allowConfigFileUpdates": true,
+                "provider": "GitHub",
+                "buildProperties": {
+                  "appLocation": "/",
+                  "apiLocation": "",
+                  "outputLocation": "build",
+                  "skipGithubActionWorkflowGeneration": true
+                }
+              }
+            }
+          ],
+          "outputs": {
+            "defaultHostname": {
+              "type": "string",
+              "metadata": {
+                "description": "The default hostname of the Static Web App."
+              },
+              "value": "[reference(resourceId('Microsoft.Web/staticSites', parameters('staticWebAppName')), '2023-12-01').defaultHostname]"
+            },
+            "staticWebAppName": {
+              "type": "string",
+              "metadata": {
+                "description": "The resource name."
+              },
+              "value": "[parameters('staticWebAppName')]"
+            },
+            "resourceId": {
+              "type": "string",
+              "metadata": {
+                "description": "The resource ID of the Static Web App."
+              },
+              "value": "[resourceId('Microsoft.Web/staticSites', parameters('staticWebAppName'))]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[subscriptionResourceId('Microsoft.Resources/resourceGroups', parameters('resourceGroupName'))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "defaultHostname": {
+      "type": "string",
+      "metadata": {
+        "description": "The default hostname of the Static Web App."
+      },
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('resourceGroupName')), 'Microsoft.Resources/deployments', 'staticWebApp'), '2022-09-01').outputs.defaultHostname.value]"
+    },
+    "staticWebAppName": {
+      "type": "string",
+      "metadata": {
+        "description": "The resource name - use to retrieve deployment token via: az staticwebapp secrets list --name <name>"
+      },
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('resourceGroupName')), 'Microsoft.Resources/deployments', 'staticWebApp'), '2022-09-01').outputs.staticWebAppName.value]"
+    },
+    "resourceId": {
+      "type": "string",
+      "metadata": {
+        "description": "The resource ID of the Static Web App."
+      },
+      "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('resourceGroupName')), 'Microsoft.Resources/deployments', 'staticWebApp'), '2022-09-01').outputs.resourceId.value]"
+    },
+    "resourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "The resource group name."
+      },
+      "value": "[parameters('resourceGroupName')]"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/_app/*", "/favicon.png", "/robots.txt"]
+  },
+  "mimeTypes": {
+    ".json": "application/json"
+  }
+}

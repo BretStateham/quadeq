@@ -19,6 +19,7 @@
 		"@axe-core/playwright": "^4.11.1",
 		"@playwright/test": "^1.58.1",
 		"@sveltejs/adapter-auto": "^7.0.0",
+		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.50.1",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@testing-library/svelte": "^5.3.1",
