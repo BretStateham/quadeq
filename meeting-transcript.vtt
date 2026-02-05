@@ -1,0 +1,1023 @@
+WEBVTT
+
+NOTE
+Quadratic Equation Visualizer Planning Meeting
+Date: February 5, 2026
+Duration: 30 minutes
+Participants: Sarah Chen (TPM), Dr. Michael Torres (Teacher), Alex Rivera (Student)
+
+00:00:00.000 --> 00:00:04.500
+<v Sarah Chen>Alright, I think we're all connected now. Can everyone hear me okay?
+
+00:00:04.500 --> 00:00:06.200
+<v Dr. Michael Torres>Yes, loud and clear on my end.
+
+00:00:06.200 --> 00:00:08.800
+<v Alex Rivera>Yep, I can hear you both perfectly.
+
+00:00:08.800 --> 00:00:14.000
+<v Sarah Chen>Great! Well, good morning everyone. I'm Sarah, the technical program manager
+who'll be overseeing this project.
+
+00:00:14.000 --> 00:00:19.500
+<v Sarah Chen>Before we dive in, why don't we do quick introductions?
+Dr. Torres, would you like to start?
+
+00:00:19.500 --> 00:00:27.000
+<v Dr. Michael Torres>Sure! I'm Michael Torres. I teach Algebra II and Pre-Calculus
+at Lincoln High School, been teaching for about fifteen years now.
+
+00:00:27.000 --> 00:00:33.500
+<v Dr. Michael Torres>I've been dreaming about a tool like this for a while.
+Quadratics are one of those topics where students really struggle
+to connect the equation to the visual.
+
+00:00:33.500 --> 00:00:39.000
+<v Alex Rivera>Hi, I'm Alex. I'm a junior at Lincoln High, currently in
+Dr. Torres's Pre-Calc class.
+
+00:00:39.000 --> 00:00:44.500
+<v Alex Rivera>He asked if I'd be interested in giving the student perspective
+on this, and I thought it sounded pretty cool.
+
+00:00:44.500 --> 00:00:50.000
+<v Sarah Chen>Wonderful to meet you both. Alex, it's really valuable to have
+an actual student in these discussions. Your input will be crucial.
+
+00:00:50.000 --> 00:00:56.500
+<v Sarah Chen>So Dr. Torres, since you're the visionary here, can you tell us
+a bit about what prompted this idea?
+
+00:00:56.500 --> 00:01:05.000
+<v Dr. Michael Torres>Absolutely. Every year when we hit quadratic equations,
+I watch students' eyes glaze over when I start talking about
+the vertex, axis of symmetry, discriminant...
+
+00:01:05.000 --> 00:01:12.500
+<v Dr. Michael Torres>They can memorize formulas, sure, but they don't really
+understand what's happening. Why does changing the 'a' coefficient
+make the parabola wider or narrower?
+
+00:01:12.500 --> 00:01:18.000
+<v Alex Rivera>That's definitely true. Like, I can plug numbers into the
+quadratic formula, but sometimes I'm not sure what the answer
+actually means.
+
+00:01:18.000 --> 00:01:24.500
+<v Sarah Chen>That makes a lot of sense. So the core goal here is to help
+students visualize and understand these concepts, not just
+compute them?
+
+00:01:24.500 --> 00:01:30.000
+<v Dr. Michael Torres>Exactly. I want them to play with the equation and
+immediately see how it affects the graph.
+
+00:01:30.000 --> 00:01:37.500
+<v Sarah Chen>Got it. Now, have you thought about what form this tool
+should take? A mobile app, a website, something else?
+
+00:01:37.500 --> 00:01:46.000
+<v Dr. Michael Torres>I've thought about this quite a bit. My initial instinct
+was a mobile app because kids are always on their phones,
+but there are some complications.
+
+00:01:46.000 --> 00:01:53.500
+<v Dr. Michael Torres>The school has restrictions on app installations, and not
+everyone has the same type of phone. Some have Android,
+some have iPhone...
+
+00:01:53.500 --> 00:02:00.000
+<v Alex Rivera>Yeah, and honestly, when I'm doing homework, I'm usually
+on my laptop or Chromebook anyway. Typing equations on a
+phone keyboard sounds annoying.
+
+00:02:00.000 --> 00:02:08.500
+<v Sarah Chen>Those are great points. What about a web application?
+It would work across all devices and platforms without
+needing to install anything.
+
+00:02:08.500 --> 00:02:15.000
+<v Dr. Michael Torres>That's where I was leaning too. And if it's web-based,
+students can access it from the school's computer lab,
+their home computers, tablets...
+
+00:02:15.000 --> 00:02:21.500
+<v Alex Rivera>Would it work on my phone's browser too? Sometimes I
+do quick homework checks on my phone.
+
+00:02:21.500 --> 00:02:28.000
+<v Sarah Chen>It definitely could. We call that responsive design - the
+interface adapts to whatever screen size you're using.
+
+00:02:28.000 --> 00:02:34.500
+<v Alex Rivera>Oh nice, like how YouTube looks different on my phone
+versus my laptop but still works the same way.
+
+00:02:34.500 --> 00:02:40.000
+<v Sarah Chen>Exactly like that. So it sounds like we're converging on
+a web-based approach. Any objections?
+
+00:02:40.000 --> 00:02:45.500
+<v Dr. Michael Torres>No, I think that's the right call. Let's go with a
+web application.
+
+00:02:45.500 --> 00:02:52.000
+<v Sarah Chen>Perfect. Now let's talk about the actual functionality.
+Dr. Torres, walk me through what you envision a student
+doing when they use this tool.
+
+00:02:52.000 --> 00:03:01.500
+<v Dr. Michael Torres>Well, the fundamental equation we're working with is
+y equals ax squared plus bx plus c. That's the standard
+form of a quadratic equation.
+
+00:03:01.500 --> 00:03:08.000
+<v Dr. Michael Torres>I want students to be able to change those three
+coefficients - a, b, and c - and watch the parabola
+update in real time.
+
+00:03:08.000 --> 00:03:14.500
+<v Alex Rivera>Real time? Like, as I'm dragging a slider or typing,
+the graph changes immediately?
+
+00:03:14.500 --> 00:03:20.000
+<v Dr. Michael Torres>Ideally, yes. That instant feedback is crucial for
+building intuition.
+
+00:03:20.000 --> 00:03:27.500
+<v Sarah Chen>Makes sense. Now, are there any constraints on what
+values these coefficients can have?
+
+00:03:27.500 --> 00:03:35.000
+<v Dr. Michael Torres>Good question. The 'b' and 'c' coefficients can be
+any real number, including zero. But 'a' is special.
+
+00:03:35.000 --> 00:03:42.500
+<v Dr. Michael Torres>If 'a' equals zero, then it's not a quadratic equation
+anymore - it becomes a linear equation. So 'a' can't be zero.
+
+00:03:42.500 --> 00:03:48.000
+<v Sarah Chen>So we'll need validation on the 'a' input. The tool
+should prevent or flag an 'a' value of zero.
+
+00:03:48.000 --> 00:03:53.500
+<v Dr. Michael Torres>Right. Maybe a gentle warning message rather than
+just blocking the input.
+
+00:03:53.500 --> 00:03:59.000
+<v Alex Rivera>Could you show an example of why a equals zero doesn't
+work? Like, maybe show that it just becomes a line?
+
+00:03:59.000 --> 00:04:06.500
+<v Dr. Michael Torres>Oh, that's a nice teaching moment idea! But it might
+complicate the tool. Let's keep that as a maybe for later.
+
+00:04:06.500 --> 00:04:12.000
+<v Sarah Chen>Good call on prioritization. So the core interaction is
+adjusting a, b, and c. What about the graph itself?
+
+00:04:12.000 --> 00:04:19.500
+<v Dr. Michael Torres>The graph needs to clearly show the parabola on a
+coordinate plane. Standard x and y axes with grid lines.
+
+00:04:19.500 --> 00:04:26.000
+<v Alex Rivera>Can we zoom in and out? Sometimes when I'm graphing by
+hand, the important parts are really squished or way off screen.
+
+00:04:26.000 --> 00:04:33.500
+<v Sarah Chen>That's a great observation, Alex. Zoom functionality
+would definitely be useful. What about panning - being
+able to move the view around?
+
+00:04:33.500 --> 00:04:40.000
+<v Alex Rivera>Oh yeah, definitely. Like on Google Maps where you can
+drag to move around.
+
+00:04:40.000 --> 00:04:47.500
+<v Dr. Michael Torres>Yes, both of those are important. Sometimes the vertex
+or x-intercepts are at large values, and you need to
+navigate to see them.
+
+00:04:47.500 --> 00:04:54.000
+<v Sarah Chen>Noted. Zoom and pan capabilities on the graph. Now,
+beyond just seeing the curve, what information should
+we display?
+
+00:04:54.000 --> 00:05:02.500
+<v Dr. Michael Torres>This is where it gets exciting. There are several key
+features of a parabola that students need to identify
+and understand.
+
+00:05:02.500 --> 00:05:08.000
+<v Dr. Michael Torres>First, the vertex - that's the highest or lowest point
+of the parabola.
+
+00:05:08.000 --> 00:05:13.500
+<v Sarah Chen>And how do you calculate the vertex from the coefficients?
+
+00:05:13.500 --> 00:05:20.000
+<v Dr. Michael Torres>The x-coordinate of the vertex is negative b divided
+by 2a. Then you plug that back into the equation to
+get the y-coordinate.
+
+00:05:20.000 --> 00:05:26.500
+<v Alex Rivera>That formula is on every test. It'd be super helpful to
+see it worked out step by step.
+
+00:05:26.500 --> 00:05:32.000
+<v Sarah Chen>Step-by-step solutions - that's a great feature idea.
+What else should we show?
+
+00:05:32.000 --> 00:05:39.500
+<v Dr. Michael Torres>The axis of symmetry - that's the vertical line that
+goes through the vertex. Every parabola is symmetric
+around this line.
+
+00:05:39.500 --> 00:05:45.000
+<v Dr. Michael Torres>It's just x equals negative b over 2a, so it's
+related to the vertex formula.
+
+00:05:45.000 --> 00:05:51.500
+<v Alex Rivera>Should we draw that line on the graph too? Like a
+dashed line or something?
+
+00:05:51.500 --> 00:05:57.000
+<v Dr. Michael Torres>That's a nice idea for visual reinforcement. Yes,
+let's include that.
+
+00:05:57.000 --> 00:06:03.500
+<v Sarah Chen>Great. What other key features are there?
+
+00:06:03.500 --> 00:06:10.000
+<v Dr. Michael Torres>The y-intercept is important. That's where the parabola
+crosses the y-axis, which happens when x equals zero.
+
+00:06:10.000 --> 00:06:15.500
+<v Dr. Michael Torres>It's actually the easiest one - it's just the point
+zero comma c.
+
+00:06:15.500 --> 00:06:22.000
+<v Alex Rivera>Oh right, because when x is zero, the ax-squared and
+bx parts disappear and you're left with just c.
+
+00:06:22.000 --> 00:06:27.500
+<v Dr. Michael Torres>Exactly! See, that's the kind of connection I want
+students to make naturally.
+
+00:06:27.500 --> 00:06:34.000
+<v Sarah Chen>Love it. Now what about the x-intercepts? I recall those
+can get complicated.
+
+00:06:34.000 --> 00:06:42.500
+<v Dr. Michael Torres>Ah yes, this is where the quadratic formula comes in.
+The x-intercepts are where the parabola crosses the x-axis,
+where y equals zero.
+
+00:06:42.500 --> 00:06:49.000
+<v Dr. Michael Torres>To find them, we use x equals negative b plus or minus
+the square root of b squared minus 4ac, all divided by 2a.
+
+00:06:49.000 --> 00:06:55.500
+<v Alex Rivera>That formula gives me nightmares. But I always wondered,
+why is there a plus or minus in there?
+
+00:06:55.500 --> 00:07:03.000
+<v Dr. Michael Torres>Because a parabola can cross the x-axis at two points,
+one point, or not at all. The plus or minus gives you
+both possible x values.
+
+00:07:03.000 --> 00:07:09.500
+<v Sarah Chen>And that relates to the discriminant, right? I remember
+something about that from school.
+
+00:07:09.500 --> 00:07:17.000
+<v Dr. Michael Torres>Yes! The discriminant is b squared minus 4ac - the part
+under the square root. It tells you how many x-intercepts
+there are.
+
+00:07:17.000 --> 00:07:24.500
+<v Dr. Michael Torres>If it's positive, there are two real x-intercepts.
+If it's zero, exactly one. If it's negative, none -
+the parabola doesn't cross the x-axis.
+
+00:07:24.500 --> 00:07:31.000
+<v Alex Rivera>Whoa, I never really understood why that mattered.
+It'd be cool to see all three cases visually.
+
+00:07:31.000 --> 00:07:38.500
+<v Sarah Chen>So we should definitely display the discriminant value
+and indicate what it means - two roots, one root, or
+no real roots.
+
+00:07:38.500 --> 00:07:44.000
+<v Dr. Michael Torres>Absolutely. And the step-by-step calculation would
+show how to compute it.
+
+00:07:44.000 --> 00:07:50.500
+<v Sarah Chen>I'm noting down all these step-by-step solutions. We have
+vertex, axis of symmetry, y-intercept, discriminant,
+x-intercepts...
+
+00:07:50.500 --> 00:07:56.000
+<v Dr. Michael Torres>And the quadratic formula itself. That's the big one
+that brings it all together.
+
+00:07:56.000 --> 00:08:02.500
+<v Alex Rivera>So when I change the numbers, I'd see not just the graph
+update, but also all the worked-out solutions?
+
+00:08:02.500 --> 00:08:08.000
+<v Sarah Chen>That's the idea. Everything updates dynamically based
+on your coefficient inputs.
+
+00:08:08.000 --> 00:08:14.500
+<v Alex Rivera>That would be so helpful for checking my homework.
+I could work it out by hand first, then verify with the tool.
+
+00:08:14.500 --> 00:08:21.000
+<v Dr. Michael Torres>That's exactly the workflow I envision. Use it to
+check understanding, not replace the learning process.
+
+00:08:21.000 --> 00:08:28.500
+<v Sarah Chen>Speaking of the workflow, let's talk about the interface
+layout. How should we organize all this information?
+
+00:08:28.500 --> 00:08:36.000
+<v Dr. Michael Torres>I've been sketching some ideas. I think we need the
+coefficient inputs prominently displayed, the graph
+as the visual centerpiece...
+
+00:08:36.000 --> 00:08:42.500
+<v Dr. Michael Torres>Then a summary of the key features, and finally the
+step-by-step solutions available on demand.
+
+00:08:42.500 --> 00:08:49.000
+<v Sarah Chen>On demand - so not showing all the solution steps at
+once? That could get overwhelming.
+
+00:08:49.000 --> 00:08:56.500
+<v Dr. Michael Torres>Right. Maybe tabs or buttons to select which solution
+you want to see. Vertex steps, axis of symmetry steps,
+and so on.
+
+00:08:56.500 --> 00:09:03.000
+<v Alex Rivera>I like that. It keeps things clean but the info is
+there when you need it.
+
+00:09:03.000 --> 00:09:10.500
+<v Sarah Chen>What about on mobile? With a smaller screen, we might
+need to stack things vertically rather than side by side.
+
+00:09:10.500 --> 00:09:17.000
+<v Dr. Michael Torres>That makes sense. The graph should probably be visible
+first, with the inputs above or below it.
+
+00:09:17.000 --> 00:09:23.500
+<v Alex Rivera>Yeah, I'd want to see the graph without scrolling.
+That's the main thing.
+
+00:09:23.500 --> 00:09:30.000
+<v Sarah Chen>Agreed. And the detailed solutions could be in a
+collapsible section below.
+
+00:09:30.000 --> 00:09:37.500
+<v Dr. Michael Torres>I also want to display the equation in proper
+mathematical notation. Not just "y = ax^2 + bx + c"
+but with actual superscripts.
+
+00:09:37.500 --> 00:09:44.000
+<v Sarah Chen>Good point. We can render mathematical expressions
+properly. It'll look more like what you'd see in a
+textbook.
+
+00:09:44.000 --> 00:09:50.500
+<v Alex Rivera>That helps a lot actually. When things look right
+mathematically, they're easier to follow.
+
+00:09:50.500 --> 00:09:57.000
+<v Sarah Chen>Now, one more feature I want to explore - do we need
+any kind of preset examples or saved states?
+
+00:09:57.000 --> 00:10:04.500
+<v Dr. Michael Torres>Hmm, presets could be useful for teaching. Like,
+"here's a classic parabola" or "here's one with
+no real roots."
+
+00:10:04.500 --> 00:10:10.000
+<v Alex Rivera>Could teachers share links with specific coefficients
+set? Like, "Open this and you'll see the example
+from class."
+
+00:10:10.000 --> 00:10:17.500
+<v Sarah Chen>Shareable URLs with the state encoded - that's definitely
+doable. Great idea, Alex.
+
+00:10:17.500 --> 00:10:23.000
+<v Dr. Michael Torres>That would be fantastic for homework assignments.
+I could send a link and say "start with this equation."
+
+00:10:23.000 --> 00:10:29.500
+<v Sarah Chen>Let me add that to the feature list. Though for the
+initial version, we might want to keep it simpler.
+
+00:10:29.500 --> 00:10:36.000
+<v Dr. Michael Torres>Fair enough. Core features first. We can always
+add presets and sharing later.
+
+00:10:36.000 --> 00:10:43.500
+<v Sarah Chen>Let's talk about different parabola orientations. You
+mentioned the vertex being the highest or lowest point...
+
+00:10:43.500 --> 00:10:50.000
+<v Dr. Michael Torres>Right, that depends on whether the parabola opens
+upward or downward. It's determined by the sign of 'a'.
+
+00:10:50.000 --> 00:10:56.500
+<v Dr. Michael Torres>If 'a' is positive, the parabola opens upward like
+a smile, and the vertex is a minimum.
+
+00:10:56.500 --> 00:11:02.000
+<v Dr. Michael Torres>If 'a' is negative, it opens downward like a frown,
+and the vertex is a maximum.
+
+00:11:02.000 --> 00:11:08.500
+<v Alex Rivera>Oh, so that's what determines if it's a max or min!
+I always got confused about that.
+
+00:11:08.500 --> 00:11:15.000
+<v Sarah Chen>So we should display the direction - whether it opens
+up or down - as one of the key features?
+
+00:11:15.000 --> 00:11:21.500
+<v Dr. Michael Torres>Yes, definitely. And label it clearly. "Opens upward,
+vertex is a minimum" or "Opens downward, vertex is
+a maximum."
+
+00:11:21.500 --> 00:11:28.000
+<v Sarah Chen>Got it. That's six key features then: vertex, axis of
+symmetry, y-intercept, x-intercepts, discriminant, and
+direction.
+
+00:11:28.000 --> 00:11:34.500
+<v Dr. Michael Torres>Perfect. And the equation itself should be displayed
+with the current coefficient values substituted in.
+
+00:11:34.500 --> 00:11:41.000
+<v Sarah Chen>So if they set a=2, b=3, c=-1, it would show
+y = 2x² + 3x - 1?
+
+00:11:41.000 --> 00:11:46.500
+<v Dr. Michael Torres>Exactly. Makes it concrete and connected to what
+they're exploring.
+
+00:11:46.500 --> 00:11:53.000
+<v Alex Rivera>This is sounding really useful. Can we also mark the
+important points on the graph? Like dots for the vertex
+and intercepts?
+
+00:11:53.000 --> 00:12:00.500
+<v Sarah Chen>Visual markers on the graph - that's a nice touch.
+Maybe different colors for different points?
+
+00:12:00.500 --> 00:12:07.000
+<v Dr. Michael Torres>I love that idea. Red dot for vertex, blue dots
+for x-intercepts, green for y-intercept... something
+like that.
+
+00:12:07.000 --> 00:12:14.500
+<v Alex Rivera>And maybe labels on hover or tap? So you can see the
+actual coordinates?
+
+00:12:14.500 --> 00:12:20.000
+<v Sarah Chen>Interactive tooltips. Yes, we can definitely do that.
+Very user-friendly.
+
+00:12:20.000 --> 00:12:26.500
+<v Dr. Michael Torres>Sarah, I'm getting excited. This is shaping up to be
+exactly what I imagined.
+
+00:12:26.500 --> 00:12:33.000
+<v Sarah Chen>I'm glad! Now let's talk implementation timeline, but
+first - we need a name for this tool. Any ideas?
+
+00:12:33.000 --> 00:12:39.500
+<v Dr. Michael Torres>Hmm, I've been calling it "Quadratic Visualizer" in
+my head, but that's pretty boring.
+
+00:12:39.500 --> 00:12:45.000
+<v Alex Rivera>What about something catchier? Like... I don't know...
+"QuadViz"?
+
+00:12:45.000 --> 00:12:51.500
+<v Dr. Michael Torres>Not bad. Or maybe play on "quadratic equation"...
+Quad-E-Q? QuadEq?
+
+00:12:51.500 --> 00:12:58.000
+<v Sarah Chen>I like the short punchy names. What about "Quadec"?
+Like quad-equation shortened?
+
+00:12:58.000 --> 00:13:04.500
+<v Alex Rivera>Quadec! That sounds cool, like a tech startup or
+something. Q-U-A-D-E-C?
+
+00:13:04.500 --> 00:13:10.000
+<v Dr. Michael Torres>I like it. Simple, memorable, and clearly related
+to what the tool does.
+
+00:13:10.000 --> 00:13:16.500
+<v Sarah Chen>Quadec it is! I'll make sure we register that and
+use it for the project.
+
+00:13:16.500 --> 00:13:23.000
+<v Alex Rivera>The logo could have a little parabola in it somewhere.
+That'd be cute.
+
+00:13:23.000 --> 00:13:29.500
+<v Dr. Michael Torres>Ha! Maybe the U in Quadec styled as a parabola.
+Leave that to the designers though.
+
+00:13:29.500 --> 00:13:36.000
+<v Sarah Chen>I love the energy here. Okay, let's talk about the
+user experience flow one more time.
+
+00:13:36.000 --> 00:13:43.500
+<v Sarah Chen>A student opens Quadec. What's the first thing they
+see and do?
+
+00:13:43.500 --> 00:13:50.000
+<v Dr. Michael Torres>They should see the graph prominently displayed with
+a default parabola - maybe a equals 1, b equals 0,
+c equals 0 to start.
+
+00:13:50.000 --> 00:13:56.500
+<v Alex Rivera>The simplest case - just y equals x squared. Nice
+clean starting point.
+
+00:13:56.500 --> 00:14:03.000
+<v Dr. Michael Torres>Exactly. Then the coefficient inputs nearby, clearly
+labeled. And the key features displayed.
+
+00:14:03.000 --> 00:14:09.500
+<v Sarah Chen>Should the step-by-step solutions be visible by default
+or hidden until clicked?
+
+00:14:09.500 --> 00:14:16.000
+<v Dr. Michael Torres>Hidden but easily accessible. We don't want to
+overwhelm students with too much information at first.
+
+00:14:16.000 --> 00:14:22.500
+<v Alex Rivera>Maybe tabs or buttons for each solution type? Click
+"Vertex" to see the vertex steps, click "X-Intercepts"
+for those steps...
+
+00:14:22.500 --> 00:14:28.000
+<v Sarah Chen>Tabbed navigation for solutions. That keeps it
+organized and discoverable.
+
+00:14:28.000 --> 00:14:34.500
+<v Dr. Michael Torres>Yes. And the tabs should have clear labels. Not just
+"Step 1" and "Step 2" but "Vertex," "Axis of Symmetry,"
+"Quadratic Formula," and so on.
+
+00:14:34.500 --> 00:14:41.000
+<v Sarah Chen>Got it. Now, about input methods for the coefficients.
+We discussed typing, but what about sliders?
+
+00:14:41.000 --> 00:14:48.500
+<v Dr. Michael Torres>Sliders are great for exploration, but they're imprecise.
+If I want a to be exactly 2.5, a slider might be tricky.
+
+00:14:48.500 --> 00:14:54.000
+<v Alex Rivera>Could we have both? Type in exact values, or use
+up/down arrows to increment?
+
+00:14:54.000 --> 00:15:00.500
+<v Sarah Chen>Number input fields with step buttons. That's a common
+pattern. Gives you precision and convenience.
+
+00:15:00.500 --> 00:15:07.000
+<v Dr. Michael Torres>I like that. Maybe default step size of 0.5 or 1?
+Students can still type any value they want.
+
+00:15:07.000 --> 00:15:13.500
+<v Alex Rivera>What's the range for these values? Like, can I make
+'a' equal to 1000?
+
+00:15:13.500 --> 00:15:20.000
+<v Sarah Chen>Good question. Technically yes, but the graph would
+need to zoom out significantly to show anything useful.
+
+00:15:20.000 --> 00:15:26.500
+<v Dr. Michael Torres>For practical purposes, maybe we soft-limit the
+initial view to reasonable ranges. But don't hard-block
+extreme values.
+
+00:15:26.500 --> 00:15:33.000
+<v Sarah Chen>Makes sense. Let the zoom functionality handle
+unusual cases gracefully.
+
+00:15:33.000 --> 00:15:40.500
+<v Alex Rivera>What happens if I put in something that's not a number?
+Like letters or symbols?
+
+00:15:40.500 --> 00:15:46.000
+<v Sarah Chen>Input validation. We'll reject invalid inputs and
+keep the last valid value.
+
+00:15:46.000 --> 00:15:52.500
+<v Dr. Michael Torres>Maybe a subtle indicator if the input is invalid.
+Red border or a small error message.
+
+00:15:52.500 --> 00:15:59.000
+<v Sarah Chen>Error states and feedback - standard UX practice.
+We'll definitely include that.
+
+00:15:59.000 --> 00:16:05.500
+<v Sarah Chen>Now, let me clarify something about the step-by-step
+solutions. How detailed should they be?
+
+00:16:05.500 --> 00:16:12.000
+<v Dr. Michael Torres>Detailed enough that a struggling student can follow
+along, but not so detailed that it's overwhelming.
+
+00:16:12.000 --> 00:16:19.500
+<v Dr. Michael Torres>For example, for the vertex: Step 1 - State the formula
+for x-coordinate. Step 2 - Substitute the values.
+Step 3 - Calculate. Step 4 - Find y-coordinate.
+
+00:16:19.500 --> 00:16:25.000
+<v Alex Rivera>That's about the level of detail I'd want. Shows the
+work without being condescending.
+
+00:16:25.000 --> 00:16:31.500
+<v Sarah Chen>And each step would show the actual numbers from the
+current coefficients?
+
+00:16:31.500 --> 00:16:38.000
+<v Dr. Michael Torres>Absolutely. If a is 2 and b is 4, the vertex step
+would show "x = -4/(2 times 2) = -4/4 = -1."
+
+00:16:38.000 --> 00:16:44.500
+<v Alex Rivera>That's exactly what my teacher makes us show on tests.
+This would help me practice that format.
+
+00:16:44.500 --> 00:16:51.000
+<v Sarah Chen>Perfect. We're building a learning tool, not just a
+calculator. I really appreciate that distinction.
+
+00:16:51.000 --> 00:16:57.500
+<v Sarah Chen>Let's talk about accessibility. Are there any
+considerations we should keep in mind?
+
+00:16:57.500 --> 00:17:05.000
+<v Dr. Michael Torres>Color choices should work for colorblind students.
+And it should work with screen readers if possible.
+
+00:17:05.000 --> 00:17:12.500
+<v Sarah Chen>We'll ensure good color contrast and proper labeling.
+Screen reader support for the data values is
+definitely achievable.
+
+00:17:12.500 --> 00:17:18.000
+<v Alex Rivera>Could you also use the keyboard to navigate? Not
+everyone uses a mouse.
+
+00:17:18.000 --> 00:17:24.500
+<v Sarah Chen>Keyboard accessibility - yes, that's a core requirement.
+Tab navigation, arrow keys for adjusting values, that
+kind of thing.
+
+00:17:24.500 --> 00:17:31.000
+<v Dr. Michael Torres>This is why I wanted a proper development process.
+These details matter.
+
+00:17:31.000 --> 00:17:38.500
+<v Sarah Chen>Absolutely. We'll build it right from the start rather
+than trying to retrofit accessibility later.
+
+00:17:38.500 --> 00:17:45.000
+<v Sarah Chen>Now, I want to confirm our priorities. What's absolutely
+essential for the first version?
+
+00:17:45.000 --> 00:17:52.500
+<v Dr. Michael Torres>The coefficient inputs with validation. The live-updating
+graph with zoom and pan. The six key features displayed.
+
+00:17:52.500 --> 00:17:58.000
+<v Dr. Michael Torres>And the step-by-step solutions for each feature plus
+the quadratic formula.
+
+00:17:58.000 --> 00:18:04.500
+<v Sarah Chen>And responsive design so it works on all devices.
+That's part of the core requirements too.
+
+00:18:04.500 --> 00:18:10.000
+<v Alex Rivera>What about the visual markers on the graph - the dots
+for key points?
+
+00:18:10.000 --> 00:18:16.500
+<v Dr. Michael Torres>I'd consider those essential too. The graph needs to
+highlight what's important.
+
+00:18:16.500 --> 00:18:23.000
+<v Sarah Chen>Agreed. Visual markers for vertex, intercepts on the
+graph. Essential.
+
+00:18:23.000 --> 00:18:29.500
+<v Sarah Chen>What about nice-to-haves for later? Things we discussed
+but could defer?
+
+00:18:29.500 --> 00:18:36.000
+<v Dr. Michael Torres>Preset examples. Shareable URLs. Maybe the teaching
+moment for when 'a' equals zero.
+
+00:18:36.000 --> 00:18:42.500
+<v Alex Rivera>A dark mode would be cool too. But that's definitely
+not essential.
+
+00:18:42.500 --> 00:18:49.000
+<v Sarah Chen>Dark mode - noted for the future. Actually, that's
+pretty common now. We'll plan for it architecturally.
+
+00:18:49.000 --> 00:18:55.500
+<v Dr. Michael Torres>Is there anything we're missing? Alex, from a
+student perspective, anything else you'd want?
+
+00:18:55.500 --> 00:19:02.000
+<v Alex Rivera>Hmm... maybe a way to copy the equation or results?
+For pasting into homework documents?
+
+00:19:02.000 --> 00:19:08.500
+<v Sarah Chen>Copy-to-clipboard functionality. That's a small but
+useful feature. We can include that.
+
+00:19:08.500 --> 00:19:15.000
+<v Dr. Michael Torres>What about export? Like, could a student save their
+work as an image?
+
+00:19:15.000 --> 00:19:21.500
+<v Sarah Chen>Exporting the graph as an image - that's definitely
+doable. Good for presentations or assignments.
+
+00:19:21.500 --> 00:19:27.000
+<v Alex Rivera>Oh yeah, I could use that for my portfolio. "Here's
+the parabola I analyzed."
+
+00:19:27.000 --> 00:19:34.500
+<v Dr. Michael Torres>Let's put that in the nice-to-have category for now.
+Focus on the core experience first.
+
+00:19:34.500 --> 00:19:41.000
+<v Sarah Chen>Agreed. Core first, then we can iterate based on feedback.
+
+00:19:41.000 --> 00:19:47.500
+<v Sarah Chen>Dr. Torres, do you have any concerns or questions about
+the technical implementation?
+
+00:19:47.500 --> 00:19:54.000
+<v Dr. Michael Torres>Just that it should be fast. Students have short
+attention spans. If it's laggy, they'll lose interest.
+
+00:19:54.000 --> 00:20:00.500
+<v Sarah Chen>Performance is definitely a priority. Since we're doing
+a single-page web application, we can optimize for
+responsiveness.
+
+00:20:00.500 --> 00:20:07.000
+<v Alex Rivera>Good, because Chrome on my school Chromebook isn't
+exactly speedy.
+
+00:20:07.000 --> 00:20:13.500
+<v Sarah Chen>We'll test on lower-end devices to make sure it's
+accessible to everyone, not just people with fast
+computers.
+
+00:20:13.500 --> 00:20:20.000
+<v Dr. Michael Torres>Thank you. That's an important consideration I
+wouldn't have thought of.
+
+00:20:20.000 --> 00:20:26.500
+<v Sarah Chen>Let me summarize what we've decided to make sure we're
+all aligned.
+
+00:20:26.500 --> 00:20:33.000
+<v Sarah Chen>We're building Quadec, a web-based single-page application
+for visualizing and understanding quadratic equations.
+
+00:20:33.000 --> 00:20:40.500
+<v Sarah Chen>Users can input coefficients a, b, and c, with validation
+to prevent a from being zero.
+
+00:20:40.500 --> 00:20:47.000
+<v Sarah Chen>The graph shows the parabola with zoom and pan capabilities,
+and visual markers for the vertex and intercepts.
+
+00:20:47.000 --> 00:20:54.500
+<v Sarah Chen>We display six key features: equation, vertex, axis of
+symmetry, y-intercept, x-intercepts with discriminant,
+and direction.
+
+00:20:54.500 --> 00:21:01.000
+<v Sarah Chen>Step-by-step solutions are available via tabs for each
+feature plus the quadratic formula.
+
+00:21:01.000 --> 00:21:07.500
+<v Sarah Chen>The design is responsive, working on desktops, tablets,
+and phones, with accessibility in mind.
+
+00:21:07.500 --> 00:21:13.000
+<v Dr. Michael Torres>That's a perfect summary. I'm really excited to see
+this come to life.
+
+00:21:13.000 --> 00:21:19.500
+<v Alex Rivera>Me too! When do we get to try it out?
+
+00:21:19.500 --> 00:21:26.000
+<v Sarah Chen>We'll have an initial prototype in a few weeks.
+I'd love to have both of you test it and give feedback.
+
+00:21:26.000 --> 00:21:32.500
+<v Dr. Michael Torres>Absolutely. I can recruit a few more students to test
+as well if that's helpful.
+
+00:21:32.500 --> 00:21:39.000
+<v Sarah Chen>That would be fantastic. Real user feedback is invaluable.
+
+00:21:39.000 --> 00:21:45.500
+<v Alex Rivera>I can ask my friends if they'd want to try it. Half
+of them are in Pre-Calc too.
+
+00:21:45.500 --> 00:21:52.000
+<v Sarah Chen>The more perspectives, the better. Just don't tell
+them what to think - we want honest reactions.
+
+00:21:52.000 --> 00:21:58.500
+<v Dr. Michael Torres>Understood. Independent testing is important.
+
+00:21:58.500 --> 00:22:05.000
+<v Sarah Chen>Any other features or requirements we forgot to discuss?
+Now's the time to mention them.
+
+00:22:05.000 --> 00:22:12.500
+<v Dr. Michael Torres>I think we've covered the essentials. The equation in
+proper notation, graph with markers, key features,
+step-by-step solutions.
+
+00:22:12.500 --> 00:22:18.000
+<v Alex Rivera>Can we add more advanced stuff later? Like vertex form
+or factored form?
+
+00:22:18.000 --> 00:22:24.500
+<v Dr. Michael Torres>Oh, that's a great future enhancement! Converting
+between standard, vertex, and factored forms.
+
+00:22:24.500 --> 00:22:31.000
+<v Sarah Chen>Noted for version 2. We could even show the algebraic
+steps for converting between forms.
+
+00:22:31.000 --> 00:22:37.500
+<v Alex Rivera>That would be amazing. Those conversions always trip
+me up on tests.
+
+00:22:37.500 --> 00:22:44.000
+<v Dr. Michael Torres>One step at a time though. Let's nail the standard
+form experience first.
+
+00:22:44.000 --> 00:22:50.500
+<v Sarah Chen>Exactly. Solid foundation first, then we can build
+on it.
+
+00:22:50.500 --> 00:22:57.000
+<v Sarah Chen>I'll document all of this and share it with both of
+you for review before we start development.
+
+00:22:57.000 --> 00:23:04.500
+<v Dr. Michael Torres>I appreciate the thoroughness, Sarah. It's clear you
+want to get this right.
+
+00:23:04.500 --> 00:23:10.000
+<v Sarah Chen>That's the goal. A tool that actually helps students
+learn, not just looks pretty.
+
+00:23:10.000 --> 00:23:16.500
+<v Alex Rivera>Although looking pretty wouldn't hurt either! But yeah,
+functionality first.
+
+00:23:16.500 --> 00:23:23.000
+<v Dr. Michael Torres>Ha! We'll make sure it's both useful and visually
+appealing. Modern students expect good design.
+
+00:23:23.000 --> 00:23:29.500
+<v Sarah Chen>Clean, modern design is definitely part of the plan.
+We want students to actually enjoy using it.
+
+00:23:29.500 --> 00:23:36.000
+<v Alex Rivera>If it looks like it's from 2005, we won't take it
+seriously. Just being honest.
+
+00:23:36.000 --> 00:23:42.500
+<v Sarah Chen>Fair point. We'll bring our A-game on the visual design.
+
+00:23:42.500 --> 00:23:49.000
+<v Dr. Michael Torres>Sarah, before we wrap up, is there anything you need
+from me or Alex going forward?
+
+00:23:49.000 --> 00:23:55.500
+<v Sarah Chen>Just your availability for review sessions. I'll send
+calendar invites for prototype reviews.
+
+00:23:55.500 --> 00:24:02.000
+<v Sarah Chen>And if you think of anything else, email works. I'm
+always happy to incorporate good ideas.
+
+00:24:02.000 --> 00:24:08.500
+<v Dr. Michael Torres>Perfect. I'll keep a running list and send them your
+way periodically.
+
+00:24:08.500 --> 00:24:14.000
+<v Alex Rivera>Same here. I might ask my friends what they'd want
+and compile their suggestions.
+
+00:24:14.000 --> 00:24:20.500
+<v Sarah Chen>That's incredibly helpful. Student voice is exactly
+what we need.
+
+00:24:20.500 --> 00:24:27.000
+<v Sarah Chen>Alright, I think we've had a really productive meeting.
+Let me share my screen one moment to confirm my notes.
+
+00:24:27.000 --> 00:24:33.500
+<v Dr. Michael Torres>Go ahead.
+
+00:24:33.500 --> 00:24:40.000
+<v Sarah Chen>Okay, so - project name Quadec, single-page web app,
+responsive design. Coefficients a, b, c with a-not-zero
+validation.
+
+00:24:40.000 --> 00:24:46.500
+<v Sarah Chen>Live-updating graph with zoom, pan, and point markers.
+Six key features displayed with step-by-step solutions.
+
+00:24:46.500 --> 00:24:53.000
+<v Sarah Chen>Priority on performance and accessibility. Future
+enhancements include presets, sharing, and form conversion.
+
+00:24:53.000 --> 00:24:59.500
+<v Dr. Michael Torres>That covers everything. Well done, Sarah.
+
+00:24:59.500 --> 00:25:06.000
+<v Alex Rivera>I'm genuinely excited about this. It's cool to be
+part of building something.
+
+00:25:06.000 --> 00:25:12.500
+<v Dr. Michael Torres>You've added a lot of valuable perspective today, Alex.
+Don't underestimate your contribution.
+
+00:25:12.500 --> 00:25:19.000
+<v Sarah Chen>Agreed. This would be a very different tool without
+the student viewpoint.
+
+00:25:19.000 --> 00:25:25.500
+<v Alex Rivera>Thanks! I'll try to think of more stuff and send
+it your way.
+
+00:25:25.500 --> 00:25:32.000
+<v Sarah Chen>Please do. Okay, I think that wraps us up. Any final
+thoughts before we end?
+
+00:25:32.000 --> 00:25:38.500
+<v Dr. Michael Torres>Just gratitude. Thank you both for taking this
+seriously. It means a lot.
+
+00:25:38.500 --> 00:25:44.000
+<v Sarah Chen>It's my pleasure. I love working on educational tools.
+They make a real difference.
+
+00:25:44.000 --> 00:25:50.500
+<v Alex Rivera>Thanks for including me! This was way more interesting
+than I expected.
+
+00:25:50.500 --> 00:25:57.000
+<v Dr. Michael Torres>See, math can be interesting when you approach it
+the right way!
+
+00:25:57.000 --> 00:26:03.500
+<v Alex Rivera>Ha, okay Dr. Torres. We'll see if Quadec makes me
+love parabolas.
+
+00:26:03.500 --> 00:26:10.000
+<v Sarah Chen>That's the goal! Alright everyone, thanks for your
+time today. I'll be in touch soon.
+
+00:26:10.000 --> 00:26:16.500
+<v Dr. Michael Torres>Thanks Sarah. Talk soon.
+
+00:26:16.500 --> 00:26:23.000
+<v Alex Rivera>Bye everyone!
+
+00:26:23.000 --> 00:26:29.500
+<v Sarah Chen>Bye! Have a great rest of your day.
+
+00:26:29.500 --> 00:26:35.000
+<v Dr. Michael Torres>You too. Bye now.
+
