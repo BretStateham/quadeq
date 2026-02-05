@@ -1,0 +1,133 @@
+name: User Story
+description: A user story describing a feature or capability to implement
+title: "[Story] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## User Story Template
+        Use this template to describe a feature or capability from the user's perspective.
+        
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User Story
+      description: Describe the feature using the standard user story format
+      placeholder: |
+        As a [type of user],
+        I want [goal/desire],
+        So that [benefit/value].
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Provide additional context, background, or details about this story
+      placeholder: Explain the feature in more detail, including any relevant context from the PRD/BRD
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: List the specific, testable conditions that must be met for this story to be complete
+      placeholder: |
+        - [ ] Criterion 1: Specific, measurable outcome
+        - [ ] Criterion 2: Another specific outcome
+        - [ ] Criterion 3: Edge case handling
+      value: |
+        - [ ] 
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: Technical Notes
+      description: Implementation guidance, constraints, or architectural considerations
+      placeholder: |
+        - Libraries/frameworks to use or avoid
+        - Performance requirements
+        - Browser/device compatibility notes
+        - API contracts or data structures
+    validations:
+      required: false
+
+  - type: textarea
+    id: affected-components
+    attributes:
+      label: Affected Components
+      description: List the files, modules, or areas of the codebase this story will touch
+      placeholder: |
+        - `src/components/Graph.tsx` - Add zoom controls
+        - `src/utils/calculations.ts` - New vertex calculation function
+        - `src/styles/graph.css` - Zoom button styling
+    validations:
+      required: false
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: List any blocking issues, external dependencies, or prerequisite work
+      placeholder: |
+        - Blocked by #123
+        - Requires library X to be installed
+        - Depends on feature Y being complete
+    validations:
+      required: false
+
+  - type: textarea
+    id: testing-requirements
+    attributes:
+      label: Testing Requirements
+      description: Describe the testing needed to verify this story
+      placeholder: |
+        - Unit tests for calculation functions
+        - E2E test for user flow
+        - Manual testing on mobile devices
+    validations:
+      required: false
+
+  - type: textarea
+    id: design-assets
+    attributes:
+      label: Design/UX References
+      description: Links to mockups, wireframes, or design specifications
+      placeholder: |
+        - Figma link
+        - Screenshot of expected behavior
+        - Reference to similar UI patterns
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How critical is this story?
+      options:
+        - Must (required for launch)
+        - Should (important but not blocking)
+        - Could (nice to have)
+        - Won't (out of scope for this release)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: size
+    attributes:
+      label: Estimated Size
+      description: Rough estimate of implementation effort
+      options:
+        - XS (< 1 hour)
+        - S (1-4 hours)
+        - M (4-8 hours)
+        - L (1-2 days)
+        - XL (> 2 days - consider splitting)
+    validations:
+      required: false
